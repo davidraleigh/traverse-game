@@ -53,5 +53,11 @@ public:
  void runTest() { suite_TraverseTestSuite.testMoveSequence2(); }
 } testDescription_suite_TraverseTestSuite_testMoveSequence2;
 
+static class TestDescription_suite_TraverseTestSuite_testRowString : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testRowString() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 49, "testRowString" ) {}
+ void runTest() { suite_TraverseTestSuite.testRowString(); }
+} testDescription_suite_TraverseTestSuite_testRowString;
+
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

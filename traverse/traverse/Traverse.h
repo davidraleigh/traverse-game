@@ -26,7 +26,8 @@ public:
         Lava  = 4,
         Water = 2,
         Teleport = 1,
-        Open = 0
+        Open = 0,
+        Knight = -1
     };
     
     struct position_t {
@@ -57,11 +58,14 @@ public:
     //optionally print the state of the knight board to the terminal as shown
     //above after each move.  The current position should be marked with a 'K'.
     std::string GetPrintableRow(int x);
+    void PrintBoard();
     
+    bool MoveTo(position_t position);
     
 private:
     int m_boardSize;
     std::vector<std::vector<PositionType>> m_boardState;
+    position_t m_currentPosition;
     
     bool _MoveTest(position_t fromPos, position_t toPos);
     inline bool _OnBoard(position_t position) {

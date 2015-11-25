@@ -45,6 +45,13 @@ public:
         positions.push_back(Traverse::position_t(0,4));
         TS_ASSERT(!t.MoveSequenceTest(positions));
     }
+    
+    void testRowString( void )
+    {
+        Traverse t(5);
+        std::string s = t.GetPrintableRow(0);
+        TS_ASSERT_EQUALS(s.compare(". . . . . "), 0);
+    }
 };
 
 #endif

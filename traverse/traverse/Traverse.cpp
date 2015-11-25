@@ -1,9 +1,12 @@
 #include "Traverse.h"
 #include <cstdlib>
+#include <sstream>
+#include <iostream>
 
 Traverse::Traverse(int boardSize) :
     m_boardSize(boardSize) ,
-    m_boardState(boardSize, std::vector<PositionType>(boardSize))
+    m_boardState(boardSize, std::vector<PositionType>(boardSize)),
+    m_currentPosition(position_t()) // start at -1 -1
 {
 }
 
@@ -14,7 +17,45 @@ Traverse::PositionType Traverse::GetPosition(int x, int y)
 
 std::string Traverse::GetPrintableRow(int x)
 {
+    std::stringstream ss;
+    for (int i = 0; i < m_boardSize; i++) {
+        PositionType positionType = m_boardState[x][i];
+        switch (positionType) {
+            case Barrier:
+                ss << "B";
+                break;
+            case Knight:
+                ss << "K";
+                break;
+            case Lava:
+                ss << "L";
+                break;
+            case Open:
+                ss << ". ";
+                break;
+            case Rock:
+                ss << "R";
+                break;
+            case Teleport:
+                ss << "T";
+                break;
+            case Water:
+                ss << "W";
+                break;
+            default:
+                break;
+        }
+    }
     
+    return ss.str();
+}
+
+void Traverse::PrintBoard()
+{
+    for (int i = 0; i < m_boardSize; i++)
+    {
+        std::cout << GetPrintableRow(i) << std::endl;
+    }
 }
 
 bool Traverse::MoveSequenceTest(std::vector<position_t> moves)

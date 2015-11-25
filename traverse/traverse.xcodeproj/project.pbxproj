@@ -11,10 +11,19 @@
 		87532CF51C05C09D0045E969 /* Traverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532CF41C05C09D0045E969 /* Traverse.cpp */; };
 		87532D021C05C0B00045E969 /* runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532D011C05C0B00045E969 /* runner.cpp */; };
 		87532D081C05C0DD0045E969 /* libtraverse.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87532CED1C05C09D0045E969 /* libtraverse.dylib */; };
+		8794C79B1C05E1A40029D33B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8794C79A1C05E1A40029D33B /* main.cpp */; };
+		8794C7A11C05E1C40029D33B /* libtraverse.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87532CED1C05C09D0045E969 /* libtraverse.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		87532D061C05C0D50045E969 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87532CE51C05C09D0045E969 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87532CEC1C05C09D0045E969;
+			remoteInfo = traverse;
+		};
+		8794C79F1C05E1BD0029D33B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87532CE51C05C09D0045E969 /* Project object */;
 			proxyType = 1;
@@ -33,6 +42,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		8794C7961C05E1A40029D33B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +60,8 @@
 		87532CFF1C05C0B00045E969 /* traverse-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "traverse-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87532D011C05C0B00045E969 /* runner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = runner.cpp; sourceTree = "<group>"; };
 		87532D0A1C05C2D00045E969 /* TestTraverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTraverse.h; sourceTree = "<group>"; };
+		8794C7981C05E1A40029D33B /* traverse-game */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "traverse-game"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8794C79A1C05E1A40029D33B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +80,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8794C7951C05E1A40029D33B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8794C7A11C05E1C40029D33B /* libtraverse.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -68,6 +96,7 @@
 			children = (
 				87532CEF1C05C09D0045E969 /* traverse */,
 				87532D001C05C0B00045E969 /* traverse-tests */,
+				8794C7991C05E1A40029D33B /* traverse-game */,
 				87532CEE1C05C09D0045E969 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,6 +106,7 @@
 			children = (
 				87532CED1C05C09D0045E969 /* libtraverse.dylib */,
 				87532CFF1C05C0B00045E969 /* traverse-tests */,
+				8794C7981C05E1A40029D33B /* traverse-game */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +127,14 @@
 				87532D0A1C05C2D00045E969 /* TestTraverse.h */,
 			);
 			path = "traverse-tests";
+			sourceTree = "<group>";
+		};
+		8794C7991C05E1A40029D33B /* traverse-game */ = {
+			isa = PBXGroup;
+			children = (
+				8794C79A1C05E1A40029D33B /* main.cpp */,
+			);
+			path = "traverse-game";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +187,24 @@
 			productReference = 87532CFF1C05C0B00045E969 /* traverse-tests */;
 			productType = "com.apple.product-type.tool";
 		};
+		8794C7971C05E1A40029D33B /* traverse-game */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8794C79E1C05E1A40029D33B /* Build configuration list for PBXNativeTarget "traverse-game" */;
+			buildPhases = (
+				8794C7941C05E1A40029D33B /* Sources */,
+				8794C7951C05E1A40029D33B /* Frameworks */,
+				8794C7961C05E1A40029D33B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8794C7A01C05E1BD0029D33B /* PBXTargetDependency */,
+			);
+			name = "traverse-game";
+			productName = "traverse-game";
+			productReference = 8794C7981C05E1A40029D33B /* traverse-game */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -162,6 +218,9 @@
 						CreatedOnToolsVersion = 6.3;
 					};
 					87532CFE1C05C0B00045E969 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					8794C7971C05E1A40029D33B = {
 						CreatedOnToolsVersion = 6.3;
 					};
 				};
@@ -180,6 +239,7 @@
 			targets = (
 				87532CEC1C05C09D0045E969 /* traverse */,
 				87532CFE1C05C0B00045E969 /* traverse-tests */,
+				8794C7971C05E1A40029D33B /* traverse-game */,
 			);
 		};
 /* End PBXProject section */
@@ -217,6 +277,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8794C7941C05E1A40029D33B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8794C79B1C05E1A40029D33B /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -224,6 +292,11 @@
 			isa = PBXTargetDependency;
 			target = 87532CEC1C05C09D0045E969 /* traverse */;
 			targetProxy = 87532D061C05C0D50045E969 /* PBXContainerItemProxy */;
+		};
+		8794C7A01C05E1BD0029D33B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87532CEC1C05C09D0045E969 /* traverse */;
+			targetProxy = 8794C79F1C05E1BD0029D33B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -359,6 +432,34 @@
 			};
 			name = Release;
 		};
+		8794C79C1C05E1A40029D33B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../traverse,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8794C79D1C05E1A40029D33B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../traverse,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -378,12 +479,22 @@
 				87532CFA1C05C09D0045E969 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		87532D031C05C0B00045E969 /* Build configuration list for PBXNativeTarget "traverse-tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87532D041C05C0B00045E969 /* Debug */,
 				87532D051C05C0B00045E969 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8794C79E1C05E1A40029D33B /* Build configuration list for PBXNativeTarget "traverse-game" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8794C79C1C05E1A40029D33B /* Debug */,
+				8794C79D1C05E1A40029D33B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
