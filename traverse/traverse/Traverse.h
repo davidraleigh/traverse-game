@@ -14,6 +14,7 @@
 #pragma GCC visibility push(default)
 #include <vector>
 #include <string>
+#define REGEX "[/.RrBbLlWwTtOoKk]+"
 
 
 class Traverse
@@ -26,8 +27,24 @@ public:
         Lava  = 4,
         Water = 2,
         Teleport = 1,
-        Open = 0,
-        Knight = -1
+        Open = 0
+    };
+    
+    struct positionInfo_t {
+        positionInfo_t() {
+            visited = false;
+            type = Open;
+        }
+        positionInfo_t(PositionType positionType) {
+            visited = false;
+            type = positionType;
+        }
+        positionInfo_t(PositionType positionType, bool visit) {
+            visited = visit;
+            type = positionType;
+        }
+        bool visited;
+        PositionType type;
     };
     
     struct position_t {
@@ -41,30 +58,35 @@ public:
             x = pos_x;
             y = pos_y;
         }
+        
         int x;
         int y;
-
     };
     
     Traverse(int boardSize);
+    Traverse(std::string boardLayout);
     
-    PositionType GetPosition(int x, int y);
+    positionInfo_t GetPosition(int x, int y);
     
-    //Write a function that accepts a sequence of moves and reports
-    //whether the sequence contains only valid knight moves.
+    // Write a function that accepts a sequence of moves and reports
+    // whether the sequence contains only valid knight moves.
     bool MoveSequenceTest(std::vector<position_t> moves);
     
-    //It should also
-    //optionally print the state of the knight board to the terminal as shown
-    //above after each move.  The current position should be marked with a 'K'.
-    std::string GetPrintableRow(int x);
+    // It should also
+    // optionally print the state of the knight board to the terminal as shown
+    // above after each move.  The current position should be marked with a 'K'.
     void PrintBoard();
+    std::string GetPrintableRow(int x);
     
     bool MoveTo(position_t position);
+
+    // Compute a valid sequence of moves from a given start point to a
+    // given end point in the fewest number of moves.
+    std::vector<position_t> CreatePath(position_t fromPos, position_t toPos);
     
 private:
     int m_boardSize;
-    std::vector<std::vector<PositionType>> m_boardState;
+    std::vector<std::vector<positionInfo_t>> m_boardState;
     position_t m_currentPosition;
     
     bool _MoveTest(position_t fromPos, position_t toPos);
@@ -73,11 +95,7 @@ private:
             return true;
         return false;
     };
-//    Compute a valid sequence of moves from a given start point to a given
-//    end point.
 
-//    Compute a valid sequence of moves from a given start point to a
-//    given end point in the fewest number of moves.
     
 //    Now repeat the Level 3 task for this 32x32 board.  Also, modify
 //        your validator from Level 1 to check your solutions.  This board has the
