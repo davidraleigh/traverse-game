@@ -107,5 +107,11 @@ public:
  void runTest() { suite_TraverseTestSuite.testHasBarrier2(); }
 } testDescription_suite_TraverseTestSuite_testHasBarrier2;
 
+static class TestDescription_suite_TraverseTestSuite_testAStart : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStart() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 141, "testAStart" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStart(); }
+} testDescription_suite_TraverseTestSuite_testAStart;
+
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

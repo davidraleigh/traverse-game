@@ -137,6 +137,18 @@ public:
             TS_ASSERT(!t.HasBarrier(Traverse::position_t(4, i), center));
         }
     }
+    
+    void testAStart(void) {
+        Traverse t("..... .rrr. .r.r. .rrr. .....");
+        Traverse::position_t fromPos(0, 1);
+        Traverse::position_t toPos(4, 4);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        Traverse::position_t firstPos = path[0];
+        TS_ASSERT_EQUALS(fromPos.x, firstPos.x);
+        TS_ASSERT_EQUALS(fromPos.y, firstPos.y);
+        TS_ASSERT_EQUALS(toPos.x, path[path.size() - 1].x);
+        TS_ASSERT_EQUALS(toPos.y, path[path.size() - 1].y);
+    }
 };
 
 #endif

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <regex>
 #include <cmath>
-
-
+#include <map>
+#define MOVE_COST 3
+#define LAVA_COST 5
+#define WATER_COST 2
 Traverse::Traverse(int boardSize) :
     m_boardSize(boardSize) ,
     m_boardState(boardSize, std::vector<positionInfo_t>(boardSize)),
@@ -173,9 +175,55 @@ bool Traverse::HasBarrier(Traverse::position_t fromPos, Traverse::position_t toP
 std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
 {
     std::vector<Traverse::position_t> path;
+    path.push_back(fromPos);
+    _PopulateNodeSpace(toPos);
+    Traverse::node_t initialNode(fromPos, m_nodeSpace[fromPos].hCost);
+    initialNode.gCost = 0;
+    initialNode.fCost = 0 + m_nodeSpace[fromPos].hCost;
     
+    m_closedNodes.insert(initialNode);
     
+    path.push_back(toPos);
     return path;
+}
+
+void Traverse::_GetClosestNodes(Traverse::node_t fromPos) {
+    
+    int x[] = {-2,-1,1,2,2,1,-1,-2};
+    int y[] = {1,2,2,1,-1,-2,-2,-1};
+    for (int i = 0; i < 8; i++) {
+        Traverse::position_t toPos(x[i], y[i]);
+        
+        // is this a viable move
+        if (_MoveTest(fromPos.position, toPos))
+        {
+            int hCost = m_nodeSpace[toPos].hCost;
+            int gCost = fromPos.gCost + MOVE_COST;
+            if (m_boardState[x[i]][y[i]].type == Lava)
+                gCost += MOVE_COST * LAVA_COST;
+            else if (m_boardState[x[i]][y[i]].type == Water)
+                gCost += MOVE_COST * WATER_COST;
+            
+            Traverse::node_t nextNode(toPos, hCost);
+            nextNode.gCost = gCost;
+            nextNode.fCost = gCost + hCost;
+            
+        }
+        
+    }
+}
+
+void Traverse::_PopulateNodeSpace(Traverse::position_t toPos)
+{
+    m_nodeSpace.clear();
+    for (int x = 0; x < m_boardSize; x++) {
+        for (int y = 0; y < m_boardSize; y++) {
+            int hVal = ::abs(toPos.x - x);
+            hVal += ::abs(toPos.y - y);
+            Traverse::position_t position(x, y);
+            m_nodeSpace.insert({position, Traverse::node_t(position, hVal)});
+        }
+    }
 }
 
 bool Traverse::_MoveTest(Traverse::position_t fromPos, Traverse::position_t toPos)

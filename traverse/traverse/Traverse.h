@@ -14,6 +14,8 @@
 #pragma GCC visibility push(default)
 #include <vector>
 #include <string>
+#include <set>
+#include <map>
 #define REGEX "[/.RrBbLlWwTtOoKk]+"
 
 
@@ -72,10 +74,18 @@ public:
             hCost = hCost;
             gCost = INT32_MAX;
         }
+        
         position_t position;
         int hCost;
         int gCost;
+        int fCost;
         position_t parentPosition;
+    };
+    
+    struct cmpNodeByHCost {
+        bool operator()(const node_t& a, const node_t& b) const {
+            return a.fCost < b.fCost;
+        }
     };
     
     Traverse(int boardSize);
@@ -104,8 +114,14 @@ private:
     int m_boardSize;
     std::vector<std::vector<positionInfo_t>> m_boardState;
     position_t m_currentPosition;
+    std::map<position_t, node_t> m_nodeSpace;
+    std::set<node_t, cmpNodeByHCost> m_openNodes;
+    std::set<node_t, cmpNodeByHCost> m_closedNodes;
     
-    std::vector<std::vector<node_t>> _PrepPathNodes();
+    
+    void _PopulateNodeSpace(Traverse::position_t toPos);
+    
+    void _GetClosestNodes(Traverse::node_t fromPos);
     
     bool _MoveTest(position_t fromPos, position_t toPos);
 
