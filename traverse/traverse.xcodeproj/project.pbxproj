@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		87532CF11C05C09D0045E969 /* Traverse.h in Headers */ = {isa = PBXBuildFile; fileRef = 87532CF01C05C09D0045E969 /* Traverse.h */; };
+		87532CF51C05C09D0045E969 /* Traverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532CF41C05C09D0045E969 /* Traverse.cpp */; };
+		87532D021C05C0B00045E969 /* runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532D011C05C0B00045E969 /* runner.cpp */; };
+		87532D081C05C0DD0045E969 /* libtraverse.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87532CED1C05C09D0045E969 /* libtraverse.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		87532D061C05C0D50045E969 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87532CE51C05C09D0045E969 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87532CEC1C05C09D0045E969;
+			remoteInfo = traverse;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		87532CFD1C05C0B00045E969 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		87532CED1C05C09D0045E969 /* libtraverse.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libtraverse.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		87532CF01C05C09D0045E969 /* Traverse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traverse.h; sourceTree = "<group>"; };
+		87532CF41C05C09D0045E969 /* Traverse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Traverse.cpp; sourceTree = "<group>"; };
+		87532CFF1C05C0B00045E969 /* traverse-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "traverse-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87532D011C05C0B00045E969 /* runner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = runner.cpp; sourceTree = "<group>"; };
+		87532D0A1C05C2D00045E969 /* TestTraverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTraverse.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87532CEA1C05C09D0045E969 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87532CFC1C05C0B00045E969 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87532D081C05C0DD0045E969 /* libtraverse.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87532CE41C05C09D0045E969 = {
+			isa = PBXGroup;
+			children = (
+				87532CEF1C05C09D0045E969 /* traverse */,
+				87532D001C05C0B00045E969 /* traverse-tests */,
+				87532CEE1C05C09D0045E969 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		87532CEE1C05C09D0045E969 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87532CED1C05C09D0045E969 /* libtraverse.dylib */,
+				87532CFF1C05C0B00045E969 /* traverse-tests */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87532CEF1C05C09D0045E969 /* traverse */ = {
+			isa = PBXGroup;
+			children = (
+				87532CF01C05C09D0045E969 /* Traverse.h */,
+				87532CF41C05C09D0045E969 /* Traverse.cpp */,
+			);
+			path = traverse;
+			sourceTree = "<group>";
+		};
+		87532D001C05C0B00045E969 /* traverse-tests */ = {
+			isa = PBXGroup;
+			children = (
+				87532D011C05C0B00045E969 /* runner.cpp */,
+				87532D0A1C05C2D00045E969 /* TestTraverse.h */,
+			);
+			path = "traverse-tests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		87532CEB1C05C09D0045E969 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87532CF11C05C09D0045E969 /* Traverse.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		87532CEC1C05C09D0045E969 /* traverse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87532CF81C05C09D0045E969 /* Build configuration list for PBXNativeTarget "traverse" */;
+			buildPhases = (
+				87532CE91C05C09D0045E969 /* Sources */,
+				87532CEA1C05C09D0045E969 /* Frameworks */,
+				87532CEB1C05C09D0045E969 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = traverse;
+			productName = traverse;
+			productReference = 87532CED1C05C09D0045E969 /* libtraverse.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		87532CFE1C05C0B00045E969 /* traverse-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87532D031C05C0B00045E969 /* Build configuration list for PBXNativeTarget "traverse-tests" */;
+			buildPhases = (
+				87532D091C05C1E20045E969 /* ShellScript */,
+				87532CFB1C05C0B00045E969 /* Sources */,
+				87532CFC1C05C0B00045E969 /* Frameworks */,
+				87532CFD1C05C0B00045E969 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87532D071C05C0D50045E969 /* PBXTargetDependency */,
+			);
+			name = "traverse-tests";
+			productName = "traverse-tests";
+			productReference = 87532CFF1C05C0B00045E969 /* traverse-tests */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87532CE51C05C09D0045E969 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "David Raleigh";
+				TargetAttributes = {
+					87532CEC1C05C09D0045E969 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					87532CFE1C05C0B00045E969 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+				};
+			};
+			buildConfigurationList = 87532CE81C05C09D0045E969 /* Build configuration list for PBXProject "traverse" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 87532CE41C05C09D0045E969;
+			productRefGroup = 87532CEE1C05C09D0045E969 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87532CEC1C05C09D0045E969 /* traverse */,
+				87532CFE1C05C0B00045E969 /* traverse-tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		87532D091C05C1E20045E969 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "source ~/.bash_profile\npython $CXXTEST_CPP_UPDATE -c $CXXTEST_PYTHON_DIR -t $PROJECT_DIR/$TARGET_NAME";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87532CE91C05C09D0045E969 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87532CF51C05C09D0045E969 /* Traverse.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87532CFB1C05C0B00045E969 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87532D021C05C0B00045E969 /* runner.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		87532D071C05C0D50045E969 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87532CEC1C05C09D0045E969 /* traverse */;
+			targetProxy = 87532D061C05C0D50045E969 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		87532CF61C05C09D0045E969 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		87532CF71C05C09D0045E969 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		87532CF91C05C09D0045E969 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		87532CFA1C05C09D0045E969 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		87532D041C05C0B00045E969 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/Users/davidraleigh/code/third-party/cxxtest",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		87532D051C05C0B00045E969 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/Users/davidraleigh/code/third-party/cxxtest",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87532CE81C05C09D0045E969 /* Build configuration list for PBXProject "traverse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87532CF61C05C09D0045E969 /* Debug */,
+				87532CF71C05C09D0045E969 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87532CF81C05C09D0045E969 /* Build configuration list for PBXNativeTarget "traverse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87532CF91C05C09D0045E969 /* Debug */,
+				87532CFA1C05C09D0045E969 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		87532D031C05C0B00045E969 /* Build configuration list for PBXNativeTarget "traverse-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87532D041C05C0B00045E969 /* Debug */,
+				87532D051C05C0B00045E969 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 87532CE51C05C09D0045E969 /* Project object */;
+}
