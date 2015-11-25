@@ -87,7 +87,7 @@ public:
         TS_ASSERT(t.MoveTo(Traverse::position_t(0,4)));
     }
     
-    void testBoardFromString(void) {
+    void testBoardFromString1(void) {
         Traverse t("KoO . . . LL B");
         std::string s1 = t.GetPrintableRow(0);
         TS_ASSERT_EQUALS(s1.compare("K . . "), 0);
@@ -95,9 +95,48 @@ public:
         TS_ASSERT_EQUALS(s2.compare(". . . "), 0);
         std::string s3 = t.GetPrintableRow(2);
         TS_ASSERT_EQUALS(s3.compare("L L B "), 0);
-        
     }
     
+    void testBoardFromString2(void) {
+        Traverse t("KoO . ddd.\n . L\nL B");
+        std::string s1 = t.GetPrintableRow(0);
+        TS_ASSERT_EQUALS(s1.compare("K . . "), 0);
+        std::string s2 = t.GetPrintableRow(1);
+        TS_ASSERT_EQUALS(s2.compare(". . . "), 0);
+        std::string s3 = t.GetPrintableRow(2);
+        TS_ASSERT_EQUALS(s3.compare("L L B "), 0);
+    }
+    
+    void testHasBarrier(void) {
+        Traverse t("..... .bbb. .b.b. .bbb. .....");
+        Traverse::position_t center(2,2);
+        for (int i = 1; i < 4; i++) {
+            TS_ASSERT(t.HasBarrier(center, Traverse::position_t(i, 0)));
+            TS_ASSERT(t.HasBarrier(center, Traverse::position_t(i, 4)));
+            TS_ASSERT(t.HasBarrier(center, Traverse::position_t(0, i)));
+            TS_ASSERT(t.HasBarrier(center, Traverse::position_t(4, i)));
+            TS_ASSERT(t.HasBarrier(Traverse::position_t(i, 0), center));
+            TS_ASSERT(t.HasBarrier(Traverse::position_t(i, 4), center));
+            TS_ASSERT(t.HasBarrier(Traverse::position_t(0, i), center));
+            TS_ASSERT(t.HasBarrier(Traverse::position_t(4, i), center));
+        }
+    }
+
+    
+    void testHasBarrier2(void) {
+        Traverse t("..... ..... ..... ..... .....");
+        Traverse::position_t center(2,2);
+        for (int i = 1; i < 4; i++) {
+            TS_ASSERT(!t.HasBarrier(center, Traverse::position_t(i, 0)));
+            TS_ASSERT(!t.HasBarrier(center, Traverse::position_t(i, 4)));
+            TS_ASSERT(!t.HasBarrier(center, Traverse::position_t(0, i)));
+            TS_ASSERT(!t.HasBarrier(center, Traverse::position_t(4, i)));
+            TS_ASSERT(!t.HasBarrier(Traverse::position_t(i, 0), center));
+            TS_ASSERT(!t.HasBarrier(Traverse::position_t(i, 4), center));
+            TS_ASSERT(!t.HasBarrier(Traverse::position_t(0, i), center));
+            TS_ASSERT(!t.HasBarrier(Traverse::position_t(4, i), center));
+        }
+    }
 };
 
 #endif

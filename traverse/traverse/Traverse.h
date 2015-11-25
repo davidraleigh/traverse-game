@@ -63,6 +63,21 @@ public:
         int y;
     };
     
+    struct node_t {
+        node_t() {
+            gCost = INT32_MAX;
+        }
+        node_t(position_t position, int hCost) {
+            position = position;
+            hCost = hCost;
+            gCost = INT32_MAX;
+        }
+        position_t position;
+        int hCost;
+        int gCost;
+        position_t parentPosition;
+    };
+    
     Traverse(int boardSize);
     Traverse(std::string boardLayout);
     
@@ -83,13 +98,17 @@ public:
     // Compute a valid sequence of moves from a given start point to a
     // given end point in the fewest number of moves.
     std::vector<position_t> CreatePath(position_t fromPos, position_t toPos);
-    
+
+    bool HasBarrier(position_t fromPos, position_t toPos);
 private:
     int m_boardSize;
     std::vector<std::vector<positionInfo_t>> m_boardState;
     position_t m_currentPosition;
     
+    std::vector<std::vector<node_t>> _PrepPathNodes();
+    
     bool _MoveTest(position_t fromPos, position_t toPos);
+
     inline bool _OnBoard(position_t position) {
         if (position.x < m_boardSize && position.x >= 0 && position.y < m_boardSize && position.y >= 0 )
             return true;

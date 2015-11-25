@@ -83,11 +83,29 @@ public:
  void runTest() { suite_TraverseTestSuite.testMoveTo2(); }
 } testDescription_suite_TraverseTestSuite_testMoveTo2;
 
-static class TestDescription_suite_TraverseTestSuite_testBoardFromString : public CxxTest::RealTestDescription {
+static class TestDescription_suite_TraverseTestSuite_testBoardFromString1 : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TraverseTestSuite_testBoardFromString() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 90, "testBoardFromString" ) {}
- void runTest() { suite_TraverseTestSuite.testBoardFromString(); }
-} testDescription_suite_TraverseTestSuite_testBoardFromString;
+ TestDescription_suite_TraverseTestSuite_testBoardFromString1() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 90, "testBoardFromString1" ) {}
+ void runTest() { suite_TraverseTestSuite.testBoardFromString1(); }
+} testDescription_suite_TraverseTestSuite_testBoardFromString1;
+
+static class TestDescription_suite_TraverseTestSuite_testBoardFromString2 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testBoardFromString2() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 100, "testBoardFromString2" ) {}
+ void runTest() { suite_TraverseTestSuite.testBoardFromString2(); }
+} testDescription_suite_TraverseTestSuite_testBoardFromString2;
+
+static class TestDescription_suite_TraverseTestSuite_testHasBarrier : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testHasBarrier() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 110, "testHasBarrier" ) {}
+ void runTest() { suite_TraverseTestSuite.testHasBarrier(); }
+} testDescription_suite_TraverseTestSuite_testHasBarrier;
+
+static class TestDescription_suite_TraverseTestSuite_testHasBarrier2 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testHasBarrier2() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 126, "testHasBarrier2" ) {}
+ void runTest() { suite_TraverseTestSuite.testHasBarrier2(); }
+} testDescription_suite_TraverseTestSuite_testHasBarrier2;
 
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

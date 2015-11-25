@@ -145,17 +145,44 @@ bool Traverse::MoveSequenceTest(std::vector<position_t> moves)
     return true;
 }
 
+bool Traverse::HasBarrier(Traverse::position_t fromPos, Traverse::position_t toPos)
+{
+    Traverse::position_t centerFrom(toPos.x, toPos.y);
+    Traverse::position_t centerTo(fromPos.x, fromPos.y);
+    
+    if (::abs(fromPos.x - toPos.x) == 2) {
+        double xMiddle = fromPos.x - toPos.x > 1 ? fromPos.x - 1 : toPos.x - 1;
+        centerFrom.x = xMiddle;
+        centerTo.x = xMiddle;
+    } else {
+        double yMiddle = fromPos.y - toPos.y > 1 ? fromPos.y - 1 : toPos.y - 1;
+        centerTo.y = yMiddle;
+        centerFrom.y = yMiddle;
+    }
+
+    if (m_boardState[fromPos.x][centerFrom.y].type == Barrier && m_boardState[centerFrom.x][fromPos.y].type == Barrier)
+        return true;
+    else if (m_boardState[centerFrom.x][centerFrom.y].type == Barrier && m_boardState[centerTo.x][centerTo.y].type == Barrier)
+        return true;
+    else if (m_boardState[toPos.x][centerTo.y].type == Barrier && m_boardState[centerTo.x][toPos.y].type == Barrier)
+        return true;
+    
+    return false;
+}
+
+std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
+{
+    std::vector<Traverse::position_t> path;
+    
+    
+    return path;
+}
+
 bool Traverse::_MoveTest(Traverse::position_t fromPos, Traverse::position_t toPos)
 {
     // check that the positions are in bounds
     if (!_OnBoard(fromPos) || !_OnBoard(toPos))
         return false;
-    
-    // check that the position isn't a rock
-    
-    
-    // check that a position isn't blocked
-    
     
     // check that the positions aren't inline
     if (fromPos.x == toPos.x || fromPos.y == toPos.y)
@@ -165,6 +192,15 @@ bool Traverse::_MoveTest(Traverse::position_t fromPos, Traverse::position_t toPo
     int yDiff = std::abs(fromPos.y - toPos.y);
     // check valid knight movement
     if (xDiff + yDiff != 3)
+        return false;
+    
+    Traverse::PositionType toType = m_boardState[toPos.x][toPos.y].type;
+    // check that the position isn't a rock
+    if (toType == Rock || toType == Barrier)
+        return false;
+    
+    // check that the path isn't blocked
+    if (HasBarrier(fromPos, toPos))
         return false;
     
     return true;
