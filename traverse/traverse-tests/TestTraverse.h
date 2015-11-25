@@ -16,18 +16,34 @@ class TraverseTestSuite : public CxxTest::TestSuite
 public:
     void testConstructor( void )
     {
-        TS_ASSERT( 1 + 1 > 1 );
-        TS_ASSERT_EQUALS( 1 + 1, 2 );
         Traverse t(5);
     }
     
     void testBoardPosition( void )
     {
-        TS_ASSERT( 1 + 1 > 1 );
-        TS_ASSERT_EQUALS( 1 + 1, 2 );
         Traverse t(5);
         Traverse::PositionType pt = t.GetPosition(0, 0);
         TS_ASSERT_EQUALS(pt, Traverse::PositionType::Open);
+    }
+    
+    void testMoveSequence1( void )
+    {
+        Traverse t(5);
+        std::vector<Traverse::position_t> positions;
+        positions.push_back(Traverse::position_t(0,0));
+        positions.push_back(Traverse::position_t(1,2));
+        positions.push_back(Traverse::position_t(0,4));
+        TS_ASSERT(t.MoveSequenceTest(positions));
+    }
+    
+    void testMoveSequence2( void )
+    {
+        Traverse t(5);
+        std::vector<Traverse::position_t> positions;
+        positions.push_back(Traverse::position_t(0,0));
+        positions.push_back(Traverse::position_t(1,1));
+        positions.push_back(Traverse::position_t(0,4));
+        TS_ASSERT(!t.MoveSequenceTest(positions));
     }
 };
 

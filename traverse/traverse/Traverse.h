@@ -13,6 +13,7 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 #include <vector>
+#include <string>
 
 
 class Traverse
@@ -28,9 +29,20 @@ public:
         Open = 0
     };
     
-    struct move_t {
-        public int x;
-        public int y;
+    struct position_t {
+        position_t()
+        {
+            x = -1;
+            y = -1;
+        }
+        position_t(int pos_x, int pos_y)
+        {
+            x = pos_x;
+            y = pos_y;
+        }
+        int x;
+        int y;
+
     };
     
     Traverse(int boardSize);
@@ -39,19 +51,24 @@ public:
     
     //Write a function that accepts a sequence of moves and reports
     //whether the sequence contains only valid knight moves.
-    bool MoveSequenceTest(std::vector<move_t> moves);
+    bool MoveSequenceTest(std::vector<position_t> moves);
     
     //It should also
     //optionally print the state of the knight board to the terminal as shown
     //above after each move.  The current position should be marked with a 'K'.
+    std::string GetPrintableRow(int x);
     
     
 private:
-    int m_boardDimensions;
+    int m_boardSize;
     std::vector<std::vector<PositionType>> m_boardState;
     
-
-    
+    bool _MoveTest(position_t fromPos, position_t toPos);
+    inline bool _OnBoard(position_t position) {
+        if (position.x < m_boardSize && position.x >= 0 && position.y < m_boardSize && position.y >= 0 )
+            return true;
+        return false;
+    };
 //    Compute a valid sequence of moves from a given start point to a given
 //    end point.
 
