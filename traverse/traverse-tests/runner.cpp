@@ -131,5 +131,11 @@ public:
  void runTest() { suite_TraverseTestSuite.testAStar4(); }
 } testDescription_suite_TraverseTestSuite_testAStar4;
 
+static class TestDescription_suite_TraverseTestSuite_testAStar5 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar5() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 184, "testAStar5" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar5(); }
+} testDescription_suite_TraverseTestSuite_testAStar5;
+
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

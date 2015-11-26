@@ -36,21 +36,21 @@ public:
     struct position_t
     {
         position_t() {
-            x = -1;
-            y = -1;
+            i = -1;
+            j = -1;
         }
-        position_t(int xIn, int yIn) {
-            x = xIn;
-            y = yIn;
+        position_t(int iIn, int jIn) {
+            i = iIn;
+            j = jIn;
         }
-        int x;
-        int y;
+        int i;
+        int j;
         
         bool operator < (const position_t& pos) const {
-            return x < pos.x || (x == pos.x && y < pos.y);
+            return i < pos.i || (i == pos.i && j < pos.j);
         }
         bool operator == (const position_t& pos) const {
-            return x == pos.x && y == pos.y;
+            return i == pos.i && j == pos.j;
         }
     };
     
@@ -69,8 +69,8 @@ public:
             m_gCost = INT32_MAX;
             m_parentNode = nullptr;
         }
-        Node(int x, int y, PositionType type) :
-            m_position(x, y)
+        Node(int i, int j, PositionType type) :
+            m_position(i, j)
         {
             m_positionType = type;
             m_gCost = INT32_MAX;
@@ -100,7 +100,7 @@ public:
     Traverse(int boardSize);
     Traverse(std::string boardLayout);
     
-    std::shared_ptr<Traverse::Node> GetNode(int x, int y);
+    std::shared_ptr<Traverse::Node> GetNode(int i, int j);
     
     // Write a function that accepts a sequence of moves and reports
     // whether the sequence contains only valid knight moves.
@@ -110,7 +110,7 @@ public:
     // optionally print the state of the knight board to the terminal as shown
     // above after each move.  The current position should be marked with a 'K'.
     void PrintBoard();
-    std::string GetPrintableRow(int x);
+    std::string GetPrintableRow(int i);
     
     bool MoveTo(position_t node);
 
@@ -135,7 +135,7 @@ private:
     bool _MoveTest(position_t fromPos, position_t toPos);
 
     inline bool _OnBoard(position_t position) {
-        if (position.x < m_boardSize && position.x >= 0 && position.y < m_boardSize && position.y >= 0 )
+        if (position.i < m_boardSize && position.i >= 0 && position.j < m_boardSize && position.j >= 0 )
             return true;
         return false;
     };
