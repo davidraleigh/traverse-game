@@ -137,5 +137,23 @@ public:
  void runTest() { suite_TraverseTestSuite.testAStar5(); }
 } testDescription_suite_TraverseTestSuite_testAStar5;
 
+static class TestDescription_suite_TraverseTestSuite_testNodeHeapOperator : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testNodeHeapOperator() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 197, "testNodeHeapOperator" ) {}
+ void runTest() { suite_TraverseTestSuite.testNodeHeapOperator(); }
+} testDescription_suite_TraverseTestSuite_testNodeHeapOperator;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar6 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar6() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 225, "testAStar6" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar6(); }
+} testDescription_suite_TraverseTestSuite_testAStar6;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar7 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar7() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 243, "testAStar7" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar7(); }
+} testDescription_suite_TraverseTestSuite_testAStar7;
+
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

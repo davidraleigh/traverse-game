@@ -193,6 +193,70 @@ public:
         TS_ASSERT_EQUALS(2, path[1].i);
         TS_ASSERT_EQUALS(2, path[1].j);
     }
+    
+    void testNodeHeapOperator(void) {
+        Traverse::Node node1;
+        node1.SetHCost(6);
+        node1.SetGCost(2);
+        Traverse::Node node2;
+        node2.SetGCost(6);
+        node2.SetHCost(3);
+//        TS_ASSERT(node2 < node1);
+        std::vector<Traverse::Node> vec;
+        vec.push_back(node2);
+        vec.push_back(node1);
+        std::make_heap(vec.begin(), vec.end());
+        std::pop_heap(vec.begin(), vec.end());
+        auto largest = vec.back();
+        vec.pop_back();
+//        TS_ASSERT_EQUALS(largest.GetGCost(), node1.GetGCost());
+
+        
+        
+        Traverse::Node node3;
+        node3.SetHCost(6);
+        node3.SetGCost(2);
+        Traverse::Node node4;
+        node4.SetHCost(4);
+        node4.SetGCost(6);
+  //      TS_ASSERT(node4 < node3);
+    }
+    
+    void testAStar6(void) {
+        Traverse t("..r.. .b.b. ..L.. ..b.. .....");
+        Traverse::position_t fromPos(1, 0);
+        Traverse::position_t toPos(1, 4);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 5);
+        TS_ASSERT_EQUALS(fromPos.i, path[0].i);
+        TS_ASSERT_EQUALS(fromPos.j, path[0].j);
+        TS_ASSERT_EQUALS(toPos.i, path[path.size() - 1].i);
+        TS_ASSERT_EQUALS(toPos.j, path[path.size() - 1].j);
+        TS_ASSERT_EQUALS(3, path[1].i);
+        TS_ASSERT_EQUALS(1, path[1].j);
+        TS_ASSERT_EQUALS(1, path[2].i);
+        TS_ASSERT_EQUALS(2, path[2].j);
+        TS_ASSERT_EQUALS(3, path[3].i);
+        TS_ASSERT_EQUALS(3, path[3].j);
+    }
+    
+    void testAStar7(void) {
+        Traverse t(".b... .b.b. ..L.. ..b.. .....");
+        Traverse::position_t fromPos(1, 0);
+        Traverse::position_t toPos(1, 4);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 5);
+//        TS_ASSERT_EQUALS(fromPos.i, path[0].i);
+//        TS_ASSERT_EQUALS(fromPos.j, path[0].j);
+//        TS_ASSERT_EQUALS(toPos.i, path[path.size() - 1].i);
+//        TS_ASSERT_EQUALS(toPos.j, path[path.size() - 1].j);
+//        TS_ASSERT_EQUALS(3, path[1].i);
+//        TS_ASSERT_EQUALS(1, path[1].j);
+//        TS_ASSERT_EQUALS(1, path[2].i);
+//        TS_ASSERT_EQUALS(2, path[2].j);
+//        TS_ASSERT_EQUALS(3, path[3].i);
+//        TS_ASSERT_EQUALS(3, path[3].j);
+    }
 };
 
 #endif

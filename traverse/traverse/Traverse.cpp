@@ -193,6 +193,27 @@ std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Travers
     return path;
 }
 
+
+//struct greaterComp{
+//    bool operator()(const Traverse::Node& a, const Traverse::Node& b) const{
+//        return a>b;
+//    }
+//};
+
+//struct comparator{
+//    bool operator()(const long& a,const long& b) const{
+//        return a>b;
+//    }
+//};
+
+struct greater1{
+    bool operator()(const std::shared_ptr<Traverse::Node> a, const std::shared_ptr<Traverse::Node> b)
+    {
+        return (a->GetFCost() > b->GetFCost());
+    }
+};
+
+
 std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
 {
     // clean up data structures
@@ -209,15 +230,15 @@ std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t from
     
     // place in the vector and make a heap structure
     m_openNodes.push_back(initialNode);
-    std::make_heap(m_openNodes.begin(), m_openNodes.end());
+    std::make_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
 
     // while there are open nodes
     while (m_openNodes.size() > 0)
     {
-        std::shared_ptr<Traverse::Node> currentNode = m_openNodes.front();
-        std::pop_heap(m_openNodes.begin(), m_openNodes.end());
+        std::pop_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
+        std::shared_ptr<Traverse::Node> currentNode = m_openNodes.back();
         m_openNodes.pop_back();
-
+        
         m_closedNodes[currentNode->GetPosition()] = currentNode;
         
         if (currentNode->GetPosition().i == toPos.i && currentNode->GetPosition().j == toPos.j)
@@ -268,7 +289,10 @@ void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
             if (!bContainsNeighbor)
             {
                 m_openNodes.push_back(neighborNode);
-                std::push_heap(m_openNodes.begin(), m_openNodes.end());
+                std::push_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
+            } else
+            {
+                int wierd = 0;
             }
         }
     }

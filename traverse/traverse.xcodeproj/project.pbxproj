@@ -497,6 +497,7 @@
 				8794C79D1C05E1A40029D33B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

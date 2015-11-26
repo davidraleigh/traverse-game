@@ -76,22 +76,26 @@ public:
             m_gCost = INT32_MAX;
             m_parentNode = NULL;
         }
-        void SetGCost(int gCost) { m_gCost = gCost; m_fCost = m_gCost + m_hCost; }
-        void SetHCost(int hCost) { m_hCost = hCost; m_fCost = m_gCost + m_hCost; }
+        void SetGCost(int gCost)
+        {
+            m_gCost = gCost;
+            m_fCost = m_gCost + m_hCost;
+        }
+        void SetHCost(int hCost)
+        {
+            m_hCost = hCost;
+            m_fCost = m_gCost + m_hCost;
+        }
         void SetParent(std::shared_ptr<Node> parentNode) { m_parentNode = parentNode; }
         PositionType GetType() {return m_positionType; }
-        inline int GetGCost() { return m_gCost;}
-        inline int GetFCost() { return m_hCost + m_gCost; }
-        inline position_t GetPosition() { return m_position; }
-        inline std::shared_ptr<Node> GetParent() { return m_parentNode; }
+        int GetGCost() { return m_gCost;}
+        const int GetFCost() const { return m_fCost; }
+        position_t GetPosition() { return m_position; }
+        std::shared_ptr<Node> GetParent() { return m_parentNode; }
         bool operator < (const Node& other) const
         {
-            return (m_fCost < other.m_fCost) || (m_fCost == other.m_fCost && m_hCost < other.m_hCost);
-//            if (m_fCost < other.m_fCost)
-//                return true;
-//            else if (m_fCost > other.m_fCost)
-//                return false;
-//            else if (m_hCost < other.m_hCost)
+            return (m_fCost < other.m_fCost);
+//            if (m_fCost > other.m_fCost)
 //                return true;
 //            return false;
         }
