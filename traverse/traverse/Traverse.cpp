@@ -1,22 +1,29 @@
 #include "Traverse.h"
+
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
 #include <regex>
 #include <cmath>
 #include <map>
+#include <algorithm>
+
 #define MOVE_COST 3
 #define LAVA_COST 5
 #define WATER_COST 2
 Traverse::Traverse(int boardSize) :
     m_boardSize(boardSize) ,
-    m_boardState(boardSize, std::vector<positionInfo_t>(boardSize)),
-    m_currentPosition(position_t()) // start at -1 -1
+    m_boardState(boardSize, std::vector<std::shared_ptr<Node>>(boardSize))
 {
+    for (int x = 0; x < boardSize; x++) {
+        for (int y = 0; y < boardSize; y++) {
+            m_boardState[x][y] = std::make_shared<Node>();
+        }
+    }
 }
 
 Traverse::Traverse(std::string boardLayout) :
-    m_boardState(0, std::vector<positionInfo_t>(0))
+    m_boardState(0, std::vector<std::shared_ptr<Node>>(0))
 {
     std::regex re("[/.RrBbLlWwTtOoKk]+");
     std::stringstream ss;
@@ -45,27 +52,28 @@ Traverse::Traverse(std::string boardLayout) :
 
     int x = 0;
     int y = 0;
-    std::vector<positionInfo_t> row;
+    std::vector<std::shared_ptr<Node>> row;
     for(char& c : s) {
         if (c == 'K' || c == 'k')
         {
             if (m_currentPosition.x != -1) {
                 throw std::invalid_argument("Can't have multiple K's on input string");
             }
+            
             m_currentPosition = position_t(x, y);
-            row.push_back(positionInfo_t(Open, true));
+            row.push_back(std::make_shared<Node>(x, y, Open));
         } else if (c == 'l' || c == 'L') {
-            row.push_back(positionInfo_t(Lava));
+            row.push_back(std::make_shared<Node>(x, y, Lava));
         } else if (c == 'r' || c == 'R') {
-            row.push_back(positionInfo_t(Rock));
+            row.push_back(std::make_shared<Node>(x, y, Rock));
         } else if (c == 'b' || c == 'B') {
-            row.push_back(positionInfo_t(Barrier));
+            row.push_back(std::make_shared<Node>(x, y, Barrier));
         } else if (c == 'w' || c == 'W') {
-            row.push_back(positionInfo_t(Water));
+            row.push_back(std::make_shared<Node>(x, y, Water));
         } else if (c == 't' || c == 'T') {
-            row.push_back(positionInfo_t(Teleport));
+            row.push_back(std::make_shared<Node>(x, y, Teleport));
         } else { // if o O or .
-            row.push_back(positionInfo_t(Open));
+            row.push_back(std::make_shared<Node>(x, y, Open));
         }
         
         y++;
@@ -78,7 +86,7 @@ Traverse::Traverse(std::string boardLayout) :
     }
 }
 
-Traverse::positionInfo_t Traverse::GetPosition(int x, int y)
+std::shared_ptr<Traverse::Node> Traverse::GetNode(int x, int y)
 {
     return m_boardState[x][y];
 }
@@ -92,8 +100,7 @@ std::string Traverse::GetPrintableRow(int x)
             continue;
         }
         
-        PositionType positionType = m_boardState[x][i].type;
-        switch (positionType) {
+        switch (m_boardState[x][i]->GetType()) {
             case Barrier:
                 ss << "B ";
                 break;
@@ -162,66 +169,118 @@ bool Traverse::HasBarrier(Traverse::position_t fromPos, Traverse::position_t toP
         centerFrom.y = yMiddle;
     }
 
-    if (m_boardState[fromPos.x][centerFrom.y].type == Barrier && m_boardState[centerFrom.x][fromPos.y].type == Barrier)
+    if (m_boardState[fromPos.x][centerFrom.y]->GetType() == Barrier && m_boardState[centerFrom.x][fromPos.y]->GetType() == Barrier)
         return true;
-    else if (m_boardState[centerFrom.x][centerFrom.y].type == Barrier && m_boardState[centerTo.x][centerTo.y].type == Barrier)
+    else if (m_boardState[centerFrom.x][centerFrom.y]->GetType() == Barrier && m_boardState[centerTo.x][centerTo.y]->GetType() == Barrier)
         return true;
-    else if (m_boardState[toPos.x][centerTo.y].type == Barrier && m_boardState[centerTo.x][toPos.y].type == Barrier)
+    else if (m_boardState[toPos.x][centerTo.y]->GetType() == Barrier && m_boardState[centerTo.x][toPos.y]->GetType() == Barrier)
         return true;
     
     return false;
 }
 
-std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
+std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Traverse::Node> fromNode, std::shared_ptr<Traverse::Node> toNode)
 {
     std::vector<Traverse::position_t> path;
-    path.push_back(fromPos);
-    _PopulateNodeSpace(toPos);
-    Traverse::node_t initialNode(fromPos, m_nodeSpace[fromPos].hCost);
-    initialNode.gCost = 0;
-    initialNode.fCost = 0 + m_nodeSpace[fromPos].hCost;
-    
-    m_closedNodes.insert(initialNode);
-    
-    path.push_back(toPos);
+    std::shared_ptr<Traverse::Node> currentNode = toNode;
+    while (currentNode->GetParent())
+    {
+        path.push_back(currentNode->GetPosition());
+        currentNode = currentNode->GetParent();
+    }
+    path.push_back(currentNode->GetPosition());
+    std::reverse(path.begin(), path.end());
     return path;
 }
 
-void Traverse::_GetClosestNodes(Traverse::node_t fromPos) {
+std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
+{
+    // clean up data structures
+    m_openNodes.clear();
+    m_closedNodes.clear();
+
+    // update the H values for the to Position
+    _PopulateHValues(toPos);
     
-    int x[] = {-2,-1,1,2,2,1,-1,-2};
-    int y[] = {1,2,2,1,-1,-2,-2,-1};
-    for (int i = 0; i < 8; i++) {
-        Traverse::position_t toPos(x[i], y[i]);
+    // grab our starting node
+    std::shared_ptr<Traverse::Node> initialNode = m_boardState[fromPos.x][fromPos.y];
+    // as the starting point it's g cost is 0
+    initialNode->SetGCost(0);
+    
+    // place in the vector and make a heap structure
+    m_openNodes.push_back(initialNode);
+    std::make_heap(m_openNodes.begin(), m_openNodes.end());
+
+    // while there are open nodes
+    while (m_openNodes.size() > 0)
+    {
+        std::shared_ptr<Traverse::Node> currentNode = m_openNodes.front();
+        std::pop_heap(m_openNodes.begin(), m_openNodes.end());
+        m_openNodes.pop_back();
+
+        m_closedNodes[currentNode->GetPosition()] = currentNode;
         
-        // is this a viable move
-        if (_MoveTest(fromPos.position, toPos))
+        if (currentNode->GetPosition().x == toPos.x && currentNode->GetPosition().y == toPos.y)
         {
-            int hCost = m_nodeSpace[toPos].hCost;
-            int gCost = fromPos.gCost + MOVE_COST;
-            if (m_boardState[x[i]][y[i]].type == Lava)
-                gCost += MOVE_COST * LAVA_COST;
-            else if (m_boardState[x[i]][y[i]].type == Water)
-                gCost += MOVE_COST * WATER_COST;
-            
-            Traverse::node_t nextNode(toPos, hCost);
-            nextNode.gCost = gCost;
-            nextNode.fCost = gCost + hCost;
-            
+            return _NodesToPath(initialNode, currentNode);
         }
         
+        _PushNeighborsToOpen(currentNode);
+    }
+    
+    // failed to find a path. return an empty path
+    std::vector<Traverse::position_t> empty;
+    return empty;
+}
+
+void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
+{
+    int xOffsets[] = {-2,-1,1,2,2,1,-1,-2};
+    int yOffsets[] = {1,2,2,1,-1,-2,-2,-1};
+    int xFrom = fromNode->GetPosition().x;
+    int yFrom = fromNode->GetPosition().y;
+    for (int i = 0; i < 8; i++) {
+        int x = xOffsets[i] + xFrom;
+        int y = yOffsets[i] + yFrom;
+        // create position from coordinates
+        Traverse::position_t neighborPos(x, y);
+        
+        // if the move isn't viable                     or if the move is already in the closed set
+        if (!_MoveTest(fromNode->GetPosition(), neighborPos) ||
+            m_closedNodes.count(neighborPos) > 0)
+            continue;
+        
+        std::shared_ptr<Node> neighborNode = m_boardState[x][y];
+        int newGCost = fromNode->GetGCost() + MOVE_COST;
+        if (neighborNode->GetType() == Lava)
+            newGCost = fromNode->GetGCost() + MOVE_COST * LAVA_COST;
+        else if (neighborNode->GetType() == Water)
+            newGCost = fromNode->GetGCost() + MOVE_COST * WATER_COST;
+        
+        
+        bool bContainsNeighbor = std::find(m_openNodes.begin(), m_openNodes.end(), neighborNode) != m_openNodes.end();
+        if (newGCost < neighborNode->GetGCost() || // if newGCost is less than previous
+            !bContainsNeighbor) // or if neighborNode isn't in the openNodes set
+        {
+            neighborNode->SetGCost(newGCost);
+            neighborNode->SetParent(fromNode);
+            
+            if (!bContainsNeighbor)
+            {
+                m_openNodes.push_back(neighborNode);
+                std::push_heap(m_openNodes.begin(), m_openNodes.end());
+            }
+        }
     }
 }
 
-void Traverse::_PopulateNodeSpace(Traverse::position_t toPos)
+void Traverse::_PopulateHValues(Traverse::position_t toPos)
 {
-    m_nodeSpace.clear();
     for (int x = 0; x < m_boardSize; x++) {
         for (int y = 0; y < m_boardSize; y++) {
             int hVal = ::abs(toPos.x - x);
             hVal += ::abs(toPos.y - y);
-            Traverse::position_t position(x, y);
-            m_nodeSpace.insert({position, Traverse::node_t(position, hVal)});
+            m_boardState[x][y]->SetHCost(hVal);
         }
     }
 }
@@ -242,7 +301,7 @@ bool Traverse::_MoveTest(Traverse::position_t fromPos, Traverse::position_t toPo
     if (xDiff + yDiff != 3)
         return false;
     
-    Traverse::PositionType toType = m_boardState[toPos.x][toPos.y].type;
+    Traverse::PositionType toType = m_boardState[toPos.x][toPos.y]->GetType();
     // check that the position isn't a rock
     if (toType == Rock || toType == Barrier)
         return false;

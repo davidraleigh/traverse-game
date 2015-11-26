@@ -107,11 +107,29 @@ public:
  void runTest() { suite_TraverseTestSuite.testHasBarrier2(); }
 } testDescription_suite_TraverseTestSuite_testHasBarrier2;
 
-static class TestDescription_suite_TraverseTestSuite_testAStart : public CxxTest::RealTestDescription {
+static class TestDescription_suite_TraverseTestSuite_testAStar1 : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TraverseTestSuite_testAStart() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 141, "testAStart" ) {}
- void runTest() { suite_TraverseTestSuite.testAStart(); }
-} testDescription_suite_TraverseTestSuite_testAStart;
+ TestDescription_suite_TraverseTestSuite_testAStar1() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 141, "testAStar1" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar1(); }
+} testDescription_suite_TraverseTestSuite_testAStar1;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar2 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar2() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 149, "testAStar2" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar2(); }
+} testDescription_suite_TraverseTestSuite_testAStar2;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar3 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar3() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 163, "testAStar3" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar3(); }
+} testDescription_suite_TraverseTestSuite_testAStar3;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar4 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar4() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 171, "testAStar4" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar4(); }
+} testDescription_suite_TraverseTestSuite_testAStar4;
 
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

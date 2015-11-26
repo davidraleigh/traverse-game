@@ -22,8 +22,8 @@ public:
     void testBoardPosition( void )
     {
         Traverse t(5);
-        Traverse::PositionType pt = t.GetPosition(0, 0).type;
-        TS_ASSERT_EQUALS(pt, Traverse::PositionType::Open);
+        std::shared_ptr<Traverse::Node> pt = t.GetNode(0, 0);
+        TS_ASSERT_EQUALS(pt->GetType(), Traverse::PositionType::Open);
     }
     
     void testMoveSequence1( void )
@@ -138,16 +138,47 @@ public:
         }
     }
     
-    void testAStart(void) {
+    void testAStar1(void) {
         Traverse t("..... .rrr. .r.r. .rrr. .....");
         Traverse::position_t fromPos(0, 1);
         Traverse::position_t toPos(4, 4);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 0);
+    }
+    
+    void testAStar2(void) {
+        Traverse t("..... .rrr. .r.r. .rrr. .....");
+        Traverse::position_t fromPos(0, 1);
+        Traverse::position_t toPos(4, 3);
         std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
         Traverse::position_t firstPos = path[0];
         TS_ASSERT_EQUALS(fromPos.x, firstPos.x);
         TS_ASSERT_EQUALS(fromPos.y, firstPos.y);
         TS_ASSERT_EQUALS(toPos.x, path[path.size() - 1].x);
         TS_ASSERT_EQUALS(toPos.y, path[path.size() - 1].y);
+        TS_ASSERT_EQUALS(2, path[1].x);
+        TS_ASSERT_EQUALS(2, path[1].y);
+    }
+    
+    void testAStar3(void) {
+        Traverse t("..... .bbb. .b.b. .bbb. .....");
+        Traverse::position_t fromPos(0, 1);
+        Traverse::position_t toPos(4, 3);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 0);
+    }
+    
+    void testAStar4(void) {
+        Traverse t("..... .bbb. ..... .bbb. .....");
+        Traverse::position_t fromPos(1, 0);
+        Traverse::position_t toPos(3, 4);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(fromPos.x, path[0].x);
+        TS_ASSERT_EQUALS(fromPos.y, path[0].y);
+        TS_ASSERT_EQUALS(toPos.x, path[path.size() - 1].x);
+        TS_ASSERT_EQUALS(toPos.y, path[path.size() - 1].y);
+        TS_ASSERT_EQUALS(2, path[1].x);
+        TS_ASSERT_EQUALS(2, path[1].y);
     }
 };
 

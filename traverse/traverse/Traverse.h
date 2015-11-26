@@ -22,6 +22,7 @@
 class Traverse
 {
 public:
+    
     enum PositionType
     {
         Rock  = 16,
@@ -32,66 +33,74 @@ public:
         Open = 0
     };
     
-    struct positionInfo_t {
-        positionInfo_t() {
-            visited = false;
-            type = Open;
-        }
-        positionInfo_t(PositionType positionType) {
-            visited = false;
-            type = positionType;
-        }
-        positionInfo_t(PositionType positionType, bool visit) {
-            visited = visit;
-            type = positionType;
-        }
-        bool visited;
-        PositionType type;
-    };
-    
-    struct position_t {
-        position_t()
-        {
+    struct position_t
+    {
+        position_t() {
             x = -1;
             y = -1;
         }
-        position_t(int pos_x, int pos_y)
-        {
-            x = pos_x;
-            y = pos_y;
+        position_t(int xIn, int yIn) {
+            x = xIn;
+            y = yIn;
         }
-        
         int x;
         int y;
-    };
-    
-    struct node_t {
-        node_t() {
-            gCost = INT32_MAX;
-        }
-        node_t(position_t position, int hCost) {
-            position = position;
-            hCost = hCost;
-            gCost = INT32_MAX;
-        }
         
-        position_t position;
-        int hCost;
-        int gCost;
-        int fCost;
-        position_t parentPosition;
+        bool operator < (const position_t& pos) const {
+            return x < pos.x || (x == pos.x && y < pos.y);
+        }
+        bool operator == (const position_t& pos) const {
+            return x == pos.x && y == pos.y;
+        }
     };
     
-    struct cmpNodeByHCost {
-        bool operator()(const node_t& a, const node_t& b) const {
-            return a.fCost < b.fCost;
+    class Node
+    {
+    private:
+        std::shared_ptr<Node> m_parentNode;
+        int m_hCost;
+        int m_gCost;
+        int m_fCost;
+        PositionType m_positionType;
+        position_t m_position;
+    public:
+        Node() {
+            m_positionType = Open;
+            m_gCost = INT32_MAX;
+            m_parentNode = nullptr;
+        }
+        Node(int x, int y, PositionType type) :
+            m_position(x, y)
+        {
+            m_positionType = type;
+            m_gCost = INT32_MAX;
+            m_parentNode = NULL;
+        }
+        void SetGCost(int gCost) { m_gCost = gCost; m_fCost = m_gCost + m_hCost; }
+        void SetHCost(int hCost) { m_hCost = hCost; m_fCost = m_gCost + m_hCost; }
+        void SetParent(std::shared_ptr<Node> parentNode) { m_parentNode = parentNode; }
+        PositionType GetType() {return m_positionType; }
+        inline int GetGCost() { return m_gCost;}
+        inline int GetFCost() { return m_hCost + m_gCost; }
+        inline position_t GetPosition() { return m_position; }
+        inline std::shared_ptr<Node> GetParent() { return m_parentNode; }
+        bool operator < (const Node& other) const
+        {
+            return (m_fCost < other.m_fCost) || (m_fCost == other.m_fCost && m_hCost < other.m_hCost);
+//            if (m_fCost < other.m_fCost)
+//                return true;
+//            else if (m_fCost > other.m_fCost)
+//                return false;
+//            else if (m_hCost < other.m_hCost)
+//                return true;
+//            return false;
         }
     };
     
     Traverse(int boardSize);
     Traverse(std::string boardLayout);
     
-    positionInfo_t GetPosition(int x, int y);
+    std::shared_ptr<Traverse::Node> GetNode(int x, int y);
     
     // Write a function that accepts a sequence of moves and reports
     // whether the sequence contains only valid knight moves.
@@ -103,7 +112,7 @@ public:
     void PrintBoard();
     std::string GetPrintableRow(int x);
     
-    bool MoveTo(position_t position);
+    bool MoveTo(position_t node);
 
     // Compute a valid sequence of moves from a given start point to a
     // given end point in the fewest number of moves.
@@ -112,16 +121,16 @@ public:
     bool HasBarrier(position_t fromPos, position_t toPos);
 private:
     int m_boardSize;
-    std::vector<std::vector<positionInfo_t>> m_boardState;
+    std::vector<std::vector<std::shared_ptr<Node>>> m_boardState;
     position_t m_currentPosition;
-    std::map<position_t, node_t> m_nodeSpace;
-    std::set<node_t, cmpNodeByHCost> m_openNodes;
-    std::set<node_t, cmpNodeByHCost> m_closedNodes;
+    std::vector<std::shared_ptr<Node>> m_openNodes;
+    std::map<position_t, std::shared_ptr<Node>> m_closedNodes;
     
+    void _PopulateHValues(position_t toPos);
     
-    void _PopulateNodeSpace(Traverse::position_t toPos);
+    void _PushNeighborsToOpen(std::shared_ptr<Node> fromNode);
     
-    void _GetClosestNodes(Traverse::node_t fromPos);
+    std::vector<Traverse::position_t> _NodesToPath(std::shared_ptr<Traverse::Node> fromNode, std::shared_ptr<Traverse::Node> toNode);
     
     bool _MoveTest(position_t fromPos, position_t toPos);
 
