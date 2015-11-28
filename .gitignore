@@ -1,4 +1,6 @@
 # Compiled Object files
+
+traverse/traverse-game/traverse-game-final/*
 *.slo
 *.lo
 *.o

@@ -7,23 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		874F7BCB1C0A24C4004304D5 /* Traverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532CF41C05C09D0045E969 /* Traverse.cpp */; };
 		87532CF11C05C09D0045E969 /* Traverse.h in Headers */ = {isa = PBXBuildFile; fileRef = 87532CF01C05C09D0045E969 /* Traverse.h */; };
 		87532CF51C05C09D0045E969 /* Traverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532CF41C05C09D0045E969 /* Traverse.cpp */; };
 		87532D021C05C0B00045E969 /* runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87532D011C05C0B00045E969 /* runner.cpp */; };
 		87532D081C05C0DD0045E969 /* libtraverse.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87532CED1C05C09D0045E969 /* libtraverse.dylib */; };
 		8794C79B1C05E1A40029D33B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8794C79A1C05E1A40029D33B /* main.cpp */; };
-		8794C7A11C05E1C40029D33B /* libtraverse.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87532CED1C05C09D0045E969 /* libtraverse.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		87532D061C05C0D50045E969 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 87532CE51C05C09D0045E969 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 87532CEC1C05C09D0045E969;
-			remoteInfo = traverse;
-		};
-		8794C79F1C05E1BD0029D33B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87532CE51C05C09D0045E969 /* Project object */;
 			proxyType = 1;
@@ -84,7 +77,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8794C7A11C05E1C40029D33B /* libtraverse.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +190,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8794C7A01C05E1BD0029D33B /* PBXTargetDependency */,
 			);
 			name = "traverse-game";
 			productName = "traverse-game";
@@ -281,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				874F7BCB1C0A24C4004304D5 /* Traverse.cpp in Sources */,
 				8794C79B1C05E1A40029D33B /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,11 +284,6 @@
 			isa = PBXTargetDependency;
 			target = 87532CEC1C05C09D0045E969 /* traverse */;
 			targetProxy = 87532D061C05C0D50045E969 /* PBXContainerItemProxy */;
-		};
-		8794C7A01C05E1BD0029D33B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 87532CEC1C05C09D0045E969 /* traverse */;
-			targetProxy = 8794C79F1C05E1BD0029D33B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

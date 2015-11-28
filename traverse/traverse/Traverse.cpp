@@ -7,13 +7,14 @@
 #include <cmath>
 #include <map>
 #include <algorithm>
+#include <stack>
 
 #define MOVE_COST 3
 #define LAVA_COST 5
 #define WATER_COST 2
 Traverse::Traverse(int boardSize) :
-    m_boardSize(boardSize) ,
-    m_boardState(boardSize, std::vector<std::shared_ptr<Node>>(boardSize))
+m_boardSize(boardSize) ,
+m_boardState(boardSize, std::vector<std::shared_ptr<Node>>(boardSize))
 {
     for (int i = 0; i < boardSize; i++) {
         for (int j = 0; j < boardSize; j++) {
@@ -23,7 +24,7 @@ Traverse::Traverse(int boardSize) :
 }
 
 Traverse::Traverse(std::string boardLayout) :
-    m_boardState(0, std::vector<std::shared_ptr<Node>>(0))
+m_boardState(0, std::vector<std::shared_ptr<Node>>(0))
 {
     std::regex re("[/.RrBbLlWwTtOoKk]+");
     std::stringstream ss;
@@ -36,7 +37,7 @@ Traverse::Traverse(std::string boardLayout) :
         ss << match.str();
         next++;
     }
-
+    
     std::string s = ss.str();
     
     // get the length of the string. if it's not a square than reject
@@ -44,12 +45,12 @@ Traverse::Traverse(std::string boardLayout) :
     size_t squareTest = ::pow(m_boardSize, 2);
     if (s.size() != squareTest){
         std::string errorMessage = "\nThe processed string is:\n" + s +
-                                    "\nThe size is not a perfect square: " + std::to_string(s.size()) + "\n\n";
+        "\nThe size is not a perfect square: " + std::to_string(s.size()) + "\n\n";
         throw std::invalid_argument(errorMessage);
     }
     
     
-
+    
     int i = 0;
     int j = 0;
     std::vector<std::shared_ptr<Node>> row;
@@ -112,14 +113,13 @@ std::shared_ptr<Traverse::Node> Traverse::GetNode(int i, int j)
 
 std::string Traverse::GetPrintableRow(int i)
 {
-    int lastIndex = (int)m_bestPathPrint.size() - 1;
     std::stringstream ss;
     position_t testPosition(i,0);
     for (int j = 0; j < m_boardSize; j++) {
         // check if the current poi
         testPosition.j = j;
         if (m_bestPathPrint.count(testPosition) > 0) {
-            int moveNumber = lastIndex - m_bestPathPrint[testPosition];
+            int moveNumber = m_bestPathPrint[testPosition];
             if (moveNumber < 10)
                 ss << moveNumber << " ";
             else
@@ -209,7 +209,7 @@ bool Traverse::HasBarrier(Traverse::position_t fromPos, Traverse::position_t toP
         centerTo.j = jMiddle;
         centerFrom.j = jMiddle;
     }
-
+    
     if (m_boardState[fromPos.i][centerFrom.j]->GetType() == Barrier && m_boardState[centerFrom.i][fromPos.j]->GetType() == Barrier)
         return true;
     else if (m_boardState[centerFrom.i][centerFrom.j]->GetType() == Barrier && m_boardState[centerTo.i][centerTo.j]->GetType() == Barrier)
@@ -223,22 +223,37 @@ bool Traverse::HasBarrier(Traverse::position_t fromPos, Traverse::position_t toP
 std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Traverse::Node> fromNode, std::shared_ptr<Traverse::Node> toNode)
 {
     std::vector<Traverse::position_t> path;
+    std::stack<std::shared_ptr<Traverse::Node>> nodeStack;
     std::shared_ptr<Traverse::Node> currentNode = toNode;
-    int count = 0;
     while (currentNode->GetParent())
     {
+        nodeStack.push(currentNode);
         path.push_back(currentNode->GetPosition());
-        // this is confusing, the index is the reverse in this map.
-        // But that's because we're collecting them from the child to the
-        // parent and it seems silly to run another for loop
-        m_bestPathPrint[currentNode->GetPosition()] = count++;
-        if (currentNode->GetType() == Teleport && currentNode->GetParent()->GetType() == Teleport)
-            count--;
         currentNode = currentNode->GetParent();
     }
+    nodeStack.push(currentNode);
     path.push_back(currentNode->GetPosition());
-    m_bestPathPrint[currentNode->GetPosition()] = count++;
     std::reverse(path.begin(), path.end());
+    
+    int count = 0;
+    while (nodeStack.size() > 0) {
+        auto node = nodeStack.top();
+        if (node->GetType() == Lava) {
+            count += LAVA_COST;
+        } else if (node->GetType() == Water) {
+            count += WATER_COST;
+        } else if (node->GetType() == Teleport && node->GetParent()->GetType() == Teleport) {
+            count = 0;
+        } else if (m_bestPathPrint.size() == 0) {
+            count = 0;
+        } else {
+            count += 1;
+        }
+        
+        m_bestPathPrint[node->GetPosition()] = count;
+        nodeStack.pop();
+    }
+    
     return path;
 }
 
@@ -255,7 +270,7 @@ std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t from
     // clean up data structures
     m_openSet.clear();
     m_closedSet.clear();
-
+    
     // update the H values for the to Position
     _PopulateHValues(toPos);
     
@@ -267,7 +282,7 @@ std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t from
     // place in the vector and make a heap structure
     m_openSet.push_back(initialNode);
     std::make_heap(m_openSet.begin(), m_openSet.end(), greater1());
-
+    
     // while there are open nodes
     while (m_openSet.size() > 0)
     {
@@ -314,7 +329,7 @@ void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
         else if (neighborNode->GetType() == Water)
             newGCost = fromNode->GetGCost() + MOVE_COST * WATER_COST;
         
-            
+        
         bool bContainsNeighbor = std::find(m_openSet.begin(), m_openSet.end(), neighborNode) != m_openSet.end();
         if (newGCost < neighborNode->GetGCost() || // if newGCost is less than previous
             !bContainsNeighbor) // or if neighborNode isn't in the openNodes set
@@ -335,7 +350,7 @@ void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
             }
             
             neighborNode->SetGCost(newGCost);
-
+            
             if (!bContainsNeighbor)
             {
                 m_openSet.push_back(neighborNode);
