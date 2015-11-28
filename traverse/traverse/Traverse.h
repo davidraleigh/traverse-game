@@ -95,9 +95,6 @@ public:
         bool operator < (const Node& other) const
         {
             return (m_fCost < other.m_fCost);
-//            if (m_fCost > other.m_fCost)
-//                return true;
-//            return false;
         }
     };
     
@@ -124,38 +121,36 @@ public:
 
     bool HasBarrier(position_t fromPos, position_t toPos);
 private:
+    /**** GAME STATE ****/
+    // size of square board side
     int m_boardSize;
+    // board positions and types of positions
     std::vector<std::vector<std::shared_ptr<Node>>> m_boardState;
+    // current player position
     position_t m_currentPosition;
-    std::vector<std::shared_ptr<Node>> m_openNodes;
-    std::map<position_t, std::shared_ptr<Node>> m_closedNodes;
-    
-    void _PopulateHValues(position_t toPos);
-    
-    void _PushNeighborsToOpen(std::shared_ptr<Node> fromNode);
-    
-    std::vector<Traverse::position_t> _NodesToPath(std::shared_ptr<Traverse::Node> fromNode, std::shared_ptr<Traverse::Node> toNode);
-    
+    // only two positions on a board can be teleport positions
+    std::map<position_t, std::shared_ptr<Node>> m_teleportPair;
+    // test if a move is allowable according to the boardState
     bool _MoveTest(position_t fromPos, position_t toPos);
-
+    
+    /**** A-STAR ****/
+    // open set and closed set
+    std::vector<std::shared_ptr<Node>> m_openSet;
+    std::map<position_t, std::shared_ptr<Node>> m_closedSet;
+    // best path map for print out. Position key and index value
+    std::map<position_t, int> m_bestPathPrint;
+    // for a destination 'toPos' change all the boardState nodes h-values
+    void _PopulateHValues(position_t toPos);
+    // for a given fromNode push the set of all legal moves to the open set
+    void _PushNeighborsToOpen(std::shared_ptr<Node> fromNode);
+    // from a calculated a-star fromNode and toNode produce position and populate the m_bestPathPrint map
+    std::vector<Traverse::position_t> _NodesToPath(std::shared_ptr<Traverse::Node> fromNode, std::shared_ptr<Traverse::Node> toNode);
+    // simple test if a position is in bounds of the board
     inline bool _OnBoard(position_t position) {
         if (position.i < m_boardSize && position.i >= 0 && position.j < m_boardSize && position.j >= 0 )
             return true;
         return false;
     };
-
-    
-//    Now repeat the Level 3 task for this 32x32 board.  Also, modify
-//        your validator from Level 1 to check your solutions.  This board has the
-//        following additional rules
-
-//    1) W[ater] squares count as two moves when a piece lands there
-//    2) R[ock] squares cannot be used
-//    3) B[arrier] squares cannot be used AND cannot lie in the path
-//    4) T[eleport] squares instantly move you from one T to the other in
-//    the same move
-//    5) L[ava] squares count as five moves when a piece lands there
-    
 };
 
 #pragma GCC visibility pop

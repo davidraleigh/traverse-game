@@ -137,23 +137,53 @@ public:
  void runTest() { suite_TraverseTestSuite.testAStar5(); }
 } testDescription_suite_TraverseTestSuite_testAStar5;
 
-static class TestDescription_suite_TraverseTestSuite_testNodeHeapOperator : public CxxTest::RealTestDescription {
-public:
- TestDescription_suite_TraverseTestSuite_testNodeHeapOperator() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 197, "testNodeHeapOperator" ) {}
- void runTest() { suite_TraverseTestSuite.testNodeHeapOperator(); }
-} testDescription_suite_TraverseTestSuite_testNodeHeapOperator;
-
 static class TestDescription_suite_TraverseTestSuite_testAStar6 : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TraverseTestSuite_testAStar6() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 225, "testAStar6" ) {}
+ TestDescription_suite_TraverseTestSuite_testAStar6() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 197, "testAStar6" ) {}
  void runTest() { suite_TraverseTestSuite.testAStar6(); }
 } testDescription_suite_TraverseTestSuite_testAStar6;
 
 static class TestDescription_suite_TraverseTestSuite_testAStar7 : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TraverseTestSuite_testAStar7() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 243, "testAStar7" ) {}
+ TestDescription_suite_TraverseTestSuite_testAStar7() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 215, "testAStar7" ) {}
  void runTest() { suite_TraverseTestSuite.testAStar7(); }
 } testDescription_suite_TraverseTestSuite_testAStar7;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar8 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar8() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 233, "testAStar8" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar8(); }
+} testDescription_suite_TraverseTestSuite_testAStar8;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar9 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar9() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 243, "testAStar9" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar9(); }
+} testDescription_suite_TraverseTestSuite_testAStar9;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar10 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar10() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 253, "testAStar10" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar10(); }
+} testDescription_suite_TraverseTestSuite_testAStar10;
+
+static class TestDescription_suite_TraverseTestSuite_testAStar11 : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStar11() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 261, "testAStar11" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStar11(); }
+} testDescription_suite_TraverseTestSuite_testAStar11;
+
+static class TestDescription_suite_TraverseTestSuite_testAStarTeleport : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testAStarTeleport() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 269, "testAStarTeleport" ) {}
+ void runTest() { suite_TraverseTestSuite.testAStarTeleport(); }
+} testDescription_suite_TraverseTestSuite_testAStarTeleport;
+
+static class TestDescription_suite_TraverseTestSuite_testLongBoard : public CxxTest::RealTestDescription {
+public:
+ TestDescription_suite_TraverseTestSuite_testLongBoard() : CxxTest::RealTestDescription( Tests_TraverseTestSuite, suiteDescription_TraverseTestSuite, 277, "testLongBoard" ) {}
+ void runTest() { suite_TraverseTestSuite.testLongBoard(); }
+} testDescription_suite_TraverseTestSuite_testLongBoard;
 
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

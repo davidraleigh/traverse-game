@@ -194,34 +194,6 @@ public:
         TS_ASSERT_EQUALS(2, path[1].j);
     }
     
-    void testNodeHeapOperator(void) {
-        Traverse::Node node1;
-        node1.SetHCost(6);
-        node1.SetGCost(2);
-        Traverse::Node node2;
-        node2.SetGCost(6);
-        node2.SetHCost(3);
-//        TS_ASSERT(node2 < node1);
-        std::vector<Traverse::Node> vec;
-        vec.push_back(node2);
-        vec.push_back(node1);
-        std::make_heap(vec.begin(), vec.end());
-        std::pop_heap(vec.begin(), vec.end());
-        auto largest = vec.back();
-        vec.pop_back();
-//        TS_ASSERT_EQUALS(largest.GetGCost(), node1.GetGCost());
-
-        
-        
-        Traverse::Node node3;
-        node3.SetHCost(6);
-        node3.SetGCost(2);
-        Traverse::Node node4;
-        node4.SetHCost(4);
-        node4.SetGCost(6);
-  //      TS_ASSERT(node4 < node3);
-    }
-    
     void testAStar6(void) {
         Traverse t("..r.. .b.b. ..L.. ..b.. .....");
         Traverse::position_t fromPos(1, 0);
@@ -256,6 +228,59 @@ public:
 //        TS_ASSERT_EQUALS(2, path[2].j);
 //        TS_ASSERT_EQUALS(3, path[3].i);
 //        TS_ASSERT_EQUALS(3, path[3].j);
+    }
+
+    void testAStar8(void) {
+        Traverse t(".w. .w. ...");
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(0, 2);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 3);
+        TS_ASSERT_EQUALS(2, path[1].i);
+        TS_ASSERT_EQUALS(1, path[1].j);
+    }
+
+    void testAStar9(void) {
+        Traverse t(".r. .b. .l.");
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(0, 2);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 3);
+        TS_ASSERT_EQUALS(2, path[1].i);
+        TS_ASSERT_EQUALS(1, path[1].j);
+    }
+
+    void testAStar10(void) {
+        Traverse t(".r. .r. .r.");
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(1, 2);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 2);
+    }
+
+    void testAStar11(void) {
+        Traverse t(".b. .b. .b.");
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(1, 2);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 0);
+    }
+    
+    void testAStarTeleport(void) {
+        Traverse t("....... ....... .t..t.. ....... ....... ....... .......");
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(1, 6);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);
+        TS_ASSERT_EQUALS(path.size(), 4);
+    }
+    
+    void testLongBoard(void) {
+        const char *bigBoard = R"(........B...LLL................. ........B...LLL................. ........B...LLL...LLL........... ........B...LLL..LLL...RR....... ........B...LLLLLLLL...RR....... ........B...LLLLLL.............. ........B............RR......... ........BB...........RR......... ........WBB..................... ...RR...WWBBBBBBBBBB............ ...RR...WW.........B............ ........WW.........B......T..... ...WWWWWWW.........B............ ...WWWWWWW.........B..RR........ ...WW..........BBBBB..RR.WWWWWWW ...WW..........B.........W...... WWWW...........B...WWWWWWW...... ...WWWWWWW.....B............BBBB ...WWWWWWW.....BBB..........B... ...WWWWWWW.......BWWWWWWBBBBB... ...WWWWWWW.......BWWWWWWB....... ...........BBB..........BB...... .....RR....B.............B...... .....RR....B.............B.T.... ...........B.....RR......B...... ...........B.....RR............. ...........B..........RR........ ...........B..........RR........................................................................................................................................)";
+        
+        Traverse t(bigBoard);
+        Traverse::position_t fromPos(0, 0);
+        Traverse::position_t toPos(0, 9);
+        std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);        
     }
 };
 

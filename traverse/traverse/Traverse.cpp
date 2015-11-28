@@ -17,7 +17,7 @@ Traverse::Traverse(int boardSize) :
 {
     for (int i = 0; i < boardSize; i++) {
         for (int j = 0; j < boardSize; j++) {
-            m_boardState[i][j] = std::make_shared<Node>();
+            m_boardState[i][j] = std::make_shared<Node>(i, j, Open);
         }
     }
 }
@@ -29,16 +29,12 @@ Traverse::Traverse(std::string boardLayout) :
     std::stringstream ss;
     
     // read all characters and check for board piece characters
-    try {
-        std::sregex_iterator next(boardLayout.begin(), boardLayout.end(), re);
-        std::sregex_iterator end;
-        while (next != end) {
-            std::smatch match = *next;
-            ss << match.str();
-            next++;
-        }
-    } catch (std::regex_error& e) {
-        // Syntax error in the regular expression
+    std::sregex_iterator next(boardLayout.begin(), boardLayout.end(), re);
+    std::sregex_iterator end;
+    while (next != end) {
+        std::smatch match = *next;
+        ss << match.str();
+        next++;
     }
 
     std::string s = ss.str();
@@ -46,13 +42,18 @@ Traverse::Traverse(std::string boardLayout) :
     // get the length of the string. if it's not a square than reject
     m_boardSize = (int)::floor(::sqrt((double)s.size()));
     size_t squareTest = ::pow(m_boardSize, 2);
-    if (s.size() != squareTest)
-        throw std::invalid_argument( "received input that wasn't a square" );
+    if (s.size() != squareTest){
+        std::string errorMessage = "\nThe processed string is:\n" + s +
+                                    "\nThe size is not a perfect square: " + std::to_string(s.size()) + "\n\n";
+        throw std::invalid_argument(errorMessage);
+    }
+    
     
 
     int i = 0;
     int j = 0;
     std::vector<std::shared_ptr<Node>> row;
+    std::shared_ptr<Node> firstTeleport = nullptr;
     for(char& c : s) {
         if (c == 'K' || c == 'k')
         {
@@ -71,7 +72,24 @@ Traverse::Traverse(std::string boardLayout) :
         } else if (c == 'w' || c == 'W') {
             row.push_back(std::make_shared<Node>(i, j, Water));
         } else if (c == 't' || c == 'T') {
-            row.push_back(std::make_shared<Node>(i, j, Teleport));
+            if (firstTeleport && m_teleportPair.size() == 0) {
+                auto secondTeleport = std::make_shared<Node>(i, j, Teleport);
+                m_teleportPair[firstTeleport->GetPosition()] = secondTeleport;
+                m_teleportPair[secondTeleport->GetPosition()] = firstTeleport;
+                row.push_back(secondTeleport);
+                
+                // now that the second teleport has been confirmed change the first from Open to Teleport
+                if (m_boardState.size() == (int)firstTeleport->GetPosition().i) { // if the first teleport is in the same row as the second
+                    row[firstTeleport->GetPosition().j] = firstTeleport;
+                } else {
+                    m_boardState[firstTeleport->GetPosition().i][firstTeleport->GetPosition().j] = firstTeleport;
+                }
+            } else if (m_teleportPair.size() == 0){
+                firstTeleport = std::make_shared<Node>(i, j, Teleport);
+                row.push_back(std::make_shared<Node>(i, j, Open));
+            } else {
+                row.push_back(std::make_shared<Node>(i, j, Open));
+            }
         } else { // if o O or .
             row.push_back(std::make_shared<Node>(i, j, Open));
         }
@@ -84,6 +102,7 @@ Traverse::Traverse(std::string boardLayout) :
             j = 0;
         }
     }
+    // TODO there should be something here to check that 2 teleports were created?
 }
 
 std::shared_ptr<Traverse::Node> Traverse::GetNode(int i, int j)
@@ -93,8 +112,21 @@ std::shared_ptr<Traverse::Node> Traverse::GetNode(int i, int j)
 
 std::string Traverse::GetPrintableRow(int i)
 {
+    int lastIndex = (int)m_bestPathPrint.size() - 1;
     std::stringstream ss;
+    position_t testPosition(i,0);
     for (int j = 0; j < m_boardSize; j++) {
+        // check if the current poi
+        testPosition.j = j;
+        if (m_bestPathPrint.count(testPosition) > 0) {
+            int moveNumber = lastIndex - m_bestPathPrint[testPosition];
+            if (moveNumber < 10)
+                ss << moveNumber << " ";
+            else
+                ss << moveNumber;
+            continue;
+        }
+        
         if (i == m_currentPosition.i && j == m_currentPosition.j) {
             ss << "K ";
             continue;
@@ -131,8 +163,17 @@ void Traverse::PrintBoard()
 {
     for (int i = 0; i < m_boardSize; i++)
     {
-        std::cout << GetPrintableRow(i) << std::endl;
+        std::cout << GetPrintableRow(i) << "   " << i << std::endl;
     }
+    std::cout << std::endl << std::endl;
+    for (int j = 0; j < m_boardSize; j++)
+    {
+        if (j < 10)
+            std::cout << j << " ";
+        else
+            std::cout << j;
+    }
+    std::cout << std::endl;
 }
 
 bool Traverse::MoveTo(Traverse::position_t position)
@@ -183,28 +224,23 @@ std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Travers
 {
     std::vector<Traverse::position_t> path;
     std::shared_ptr<Traverse::Node> currentNode = toNode;
+    int count = 0;
     while (currentNode->GetParent())
     {
         path.push_back(currentNode->GetPosition());
+        // this is confusing, the index is the reverse in this map.
+        // But that's because we're collecting them from the child to the
+        // parent and it seems silly to run another for loop
+        m_bestPathPrint[currentNode->GetPosition()] = count++;
+        if (currentNode->GetType() == Teleport && currentNode->GetParent()->GetType() == Teleport)
+            count--;
         currentNode = currentNode->GetParent();
     }
     path.push_back(currentNode->GetPosition());
+    m_bestPathPrint[currentNode->GetPosition()] = count++;
     std::reverse(path.begin(), path.end());
     return path;
 }
-
-
-//struct greaterComp{
-//    bool operator()(const Traverse::Node& a, const Traverse::Node& b) const{
-//        return a>b;
-//    }
-//};
-
-//struct comparator{
-//    bool operator()(const long& a,const long& b) const{
-//        return a>b;
-//    }
-//};
 
 struct greater1{
     bool operator()(const std::shared_ptr<Traverse::Node> a, const std::shared_ptr<Traverse::Node> b)
@@ -217,8 +253,8 @@ struct greater1{
 std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t fromPos, Traverse::position_t toPos)
 {
     // clean up data structures
-    m_openNodes.clear();
-    m_closedNodes.clear();
+    m_openSet.clear();
+    m_closedSet.clear();
 
     // update the H values for the to Position
     _PopulateHValues(toPos);
@@ -229,17 +265,17 @@ std::vector<Traverse::position_t> Traverse::CreatePath(Traverse::position_t from
     initialNode->SetGCost(0);
     
     // place in the vector and make a heap structure
-    m_openNodes.push_back(initialNode);
-    std::make_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
+    m_openSet.push_back(initialNode);
+    std::make_heap(m_openSet.begin(), m_openSet.end(), greater1());
 
     // while there are open nodes
-    while (m_openNodes.size() > 0)
+    while (m_openSet.size() > 0)
     {
-        std::pop_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
-        std::shared_ptr<Traverse::Node> currentNode = m_openNodes.back();
-        m_openNodes.pop_back();
+        std::pop_heap(m_openSet.begin(), m_openSet.end(), greater1());
+        std::shared_ptr<Traverse::Node> currentNode = m_openSet.back();
+        m_openSet.pop_back();
         
-        m_closedNodes[currentNode->GetPosition()] = currentNode;
+        m_closedSet[currentNode->GetPosition()] = currentNode;
         
         if (currentNode->GetPosition().i == toPos.i && currentNode->GetPosition().j == toPos.j)
         {
@@ -268,7 +304,7 @@ void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
         
         // if the move isn't viable                     or if the move is already in the closed set
         if (!_MoveTest(fromNode->GetPosition(), neighborPos) ||
-            m_closedNodes.count(neighborPos) > 0)
+            m_closedSet.count(neighborPos) > 0)
             continue;
         
         std::shared_ptr<Node> neighborNode = m_boardState[i][j];
@@ -278,21 +314,32 @@ void Traverse::_PushNeighborsToOpen(std::shared_ptr<Node> fromNode)
         else if (neighborNode->GetType() == Water)
             newGCost = fromNode->GetGCost() + MOVE_COST * WATER_COST;
         
-        
-        bool bContainsNeighbor = std::find(m_openNodes.begin(), m_openNodes.end(), neighborNode) != m_openNodes.end();
+            
+        bool bContainsNeighbor = std::find(m_openSet.begin(), m_openSet.end(), neighborNode) != m_openSet.end();
         if (newGCost < neighborNode->GetGCost() || // if newGCost is less than previous
             !bContainsNeighbor) // or if neighborNode isn't in the openNodes set
         {
-            neighborNode->SetGCost(newGCost);
-            neighborNode->SetParent(fromNode);
+            // Teleport handling
+            if (neighborNode->GetType() == Teleport){
+                // hold the current neighbor node for closedSet placement
+                auto fromTeleportNode = neighborNode;
+                fromTeleportNode->SetGCost(newGCost);
+                fromTeleportNode->SetParent(fromNode);
+                // get the toTeleportNode at the other side of the teleport
+                neighborNode = m_teleportPair[fromTeleportNode->GetPosition()];
+                // remove the fromTeleportNode
+                m_closedSet[fromTeleportNode->GetPosition()] = fromTeleportNode;
+                neighborNode->SetParent(fromTeleportNode);
+            } else {
+                neighborNode->SetParent(fromNode);
+            }
             
+            neighborNode->SetGCost(newGCost);
+
             if (!bContainsNeighbor)
             {
-                m_openNodes.push_back(neighborNode);
-                std::push_heap(m_openNodes.begin(), m_openNodes.end(), greater1());
-            } else
-            {
-                int wierd = 0;
+                m_openSet.push_back(neighborNode);
+                std::push_heap(m_openSet.begin(), m_openSet.end(), greater1());
             }
         }
     }
