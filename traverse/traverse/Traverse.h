@@ -101,6 +101,7 @@ public:
     Traverse(int boardSize);
     Traverse(std::string boardLayout);
     
+    
     std::shared_ptr<Traverse::Node> GetNode(int i, int j);
     
     // Write a function that accepts a sequence of moves and reports

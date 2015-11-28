@@ -86,13 +86,9 @@ std::shared_ptr<Traverse> selectionLoop() {
                 break;
         }
     }
-
-    
 }
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    
     while (true) {
         std::cout << "Enter a Selection With the Keyboard:\n\n";
         
