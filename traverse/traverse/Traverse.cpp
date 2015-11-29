@@ -243,9 +243,9 @@ std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Travers
         } else if (node->GetType() == Water) {
             count += WATER_COST;
         } else if (node->GetType() == Teleport && node->GetParent()->GetType() == Teleport) {
-            count = 0;
+            count += 0;
         } else if (m_bestPathPrint.size() == 0) {
-            count = 0;
+            count += 0;
         } else {
             count += 1;
         }

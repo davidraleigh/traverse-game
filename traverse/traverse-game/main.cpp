@@ -54,6 +54,8 @@ std::shared_ptr<Traverse> empytBoard() {
         std::cout << "\nA Board must be 3x3 or larger\n";
         std::cout << "Select the size of your board:\n";
         std::cin >> size;
+        std::cin.clear();
+        std::cin.ignore();
     }
     std::shared_ptr<Traverse> board = std::make_shared<Traverse>(size);
     return board;
