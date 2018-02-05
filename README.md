@@ -13,6 +13,8 @@ Requires cmake
 
 [Knight Board]
 The knight board can be represented in x,y coordinates.  The upper left positionis (0,0) and the bottom right is (7,7).  Assume there is a single knight chess piece on the board that can move according to chess rules.  Sample S[tart] and E[nd] points are shown below:
+
+```bash
     . . . . . . . .
     . . . . . . . .
     . S . . . . . .
@@ -21,6 +23,7 @@ The knight board can be represented in x,y coordinates.  The upper left position
     . . . . . . . .
     . . . . . . . .
     . . . . . . . .
+```
 
 Level 1: Write a function that accepts a sequence of moves and reports whether the sequence contains only valid knight moves.  It should also optionally print the state of the knight board to the terminal as shown above after each move.  The current position should be marked with a 'K'.
 Level 2: Compute a valid sequence of moves from a given start point to a given end point.
@@ -31,6 +34,7 @@ Level 4: Now repeat the Level 3 task for this 32x32 board.  Also, modify your va
 3) B[arrier] squares cannot be used AND cannot lie in the path
 4) T[eleport] squares instantly move you from one T to the other in the same move
 5) L[ava] squares count as five moves when a piece lands there
+```bash
     . . . . . . . . B . . . L L L . . . . . . . . . . . . . . . . .
     . . . . . . . . B . . . L L L . . . . . . . . . . . . . . . . .
     . . . . . . . . B . . . L L L . . . L L L . . . . . . . . . . .
@@ -59,6 +63,7 @@ Level 4: Now repeat the Level 3 task for this 32x32 board.  Also, modify your va
     . . . . . . . . . . . B . . . . . R R . . . . . . . . . . . . .
     . . . . . . . . . . . B . . . . . . . . . . R R . . . . . . . .
     . . . . . . . . . . . B . . . . . . . . . . R R . . . . . . . .
+```
 
 
 
