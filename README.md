@@ -17,6 +17,11 @@ To run the example just execute the program in your terminal:
 ./traverse_game
 ```
 
+To run the unit tests you'll need to have python installed and you'll need to have made the git clone recursive call from above. Then call the tests with the following command:
+```bash
+./traverse/traverse-tests/traverse_test
+```
+
 ## Details of programming challenge:
 
 [Knight Board]
