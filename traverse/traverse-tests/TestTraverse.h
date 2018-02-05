@@ -282,6 +282,14 @@ public:
         Traverse::position_t toPos(0, 9);
         std::vector<Traverse::position_t> path = t.CreatePath(fromPos, toPos);        
     }
+    
+    /*
+     * Where is position 7???
+     * Select a start position row:10
+     * Select a start position column:31
+     * Select an end position row:21
+     * Select an end position column:0
+     * */
 };
 
 #endif

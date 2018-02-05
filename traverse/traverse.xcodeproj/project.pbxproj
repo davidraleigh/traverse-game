@@ -247,7 +247,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "source ~/.bash_profile\npython $PROJECT_DIR/../cxxtest/cxxtest_cpp_update.py -c $PROJECT_DIR/../cxxtest/python -t $PROJECT_DIR/$TARGET_NAME";
+			shellScript = "python $PROJECT_DIR/../cxxtest/cxxtest_cpp_update.py -c $PROJECT_DIR/../cxxtest/python -t $PROJECT_DIR/$TARGET_NAME";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -27,7 +27,7 @@ bool suite_TraverseTestSuite_init = false;
 static TraverseTestSuite suite_TraverseTestSuite;
 
 static CxxTest::List Tests_TraverseTestSuite = { 0, 0 };
-CxxTest::StaticSuiteDescription suiteDescription_TraverseTestSuite( "/Users/davidraleigh/code/davidraleigh/knight-traverse/traverse/traverse-tests/TestTraverse.h", 14, "TraverseTestSuite", suite_TraverseTestSuite, Tests_TraverseTestSuite );
+CxxTest::StaticSuiteDescription suiteDescription_TraverseTestSuite( "/Users/davidraleigh/code/traverse-game/traverse/traverse-tests/TestTraverse.h", 14, "TraverseTestSuite", suite_TraverseTestSuite, Tests_TraverseTestSuite );
 
 static class TestDescription_suite_TraverseTestSuite_testConstructor : public CxxTest::RealTestDescription {
 public:

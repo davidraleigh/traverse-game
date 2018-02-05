@@ -52,3 +52,6 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 *.xcuserstate
+
+.idea
+cmake-build-debug
