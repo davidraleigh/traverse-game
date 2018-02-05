@@ -5,8 +5,13 @@ To get the unit tests to run you must pull with recursive
 ```bash
 $ git clone --recursive https://github.com/davidraleigh/traverse-game.git
 ```
+If you already cloned the repo and forgot the recursive call use the update call:
+```bash
+ git submodule update --init --recursive
+```
 
-Requires cmake
+Building the project requires cmake. Use cmake and then make to build the project. If you build without the cxxtest submodule, the `travers_game` binary will still be built by `make`, there will just be some error statements about `traverse_tests`.
+
 ```bash
 cmake .
 make
