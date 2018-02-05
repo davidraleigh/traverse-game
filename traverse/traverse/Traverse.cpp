@@ -161,6 +161,13 @@ std::string Traverse::GetPrintableRow(int i)
 
 void Traverse::PrintBoard()
 {
+    std::cout << "The character inputs are '.', 'o' or 'O' for empty positions. They cost 1 movement per position.\n";
+    std::cout << "The character inputs are 'l' or 'L' for lava positions. They cost 5 movements per position.\n";
+    std::cout << "The character inputs are 'b' or 'B' for barrier positions. Impassable.\n";
+    std::cout << "The character inputs are 'r' or 'R' for rock positions. Impassable\n";
+    std::cout << "The character inputs are 'w' or 'W' for water positions. They cost 3 movements per position.\n";
+    std::cout << "The character inputs are 't' or 'T' for teleport positions. Only two teleport positions per map.\n\n";
+
     for (int i = 0; i < m_boardSize; i++)
     {
         std::cout << GetPrintableRow(i) << "   " << i << std::endl;
@@ -239,15 +246,15 @@ std::vector<Traverse::position_t> Traverse::_NodesToPath(std::shared_ptr<Travers
     while (nodeStack.size() > 0) {
         auto node = nodeStack.top();
         if (node->GetType() == Lava) {
-            count += LAVA_COST;
+            count += 1;//LAVA_COST + MOVE_COST;
         } else if (node->GetType() == Water) {
-            count += WATER_COST;
+            count += 1;//WATER_COST + MOVE_COST;
         } else if (node->GetType() == Teleport && node->GetParent()->GetType() == Teleport) {
             count += 0;
         } else if (m_bestPathPrint.size() == 0) {
             count += 0;
         } else {
-            count += 1;
+            count += 1;//MOVE_COST;
         }
         
         m_bestPathPrint[node->GetPosition()] = count;

@@ -19,7 +19,7 @@ std::shared_ptr<Traverse> inputBoard() {
     std::shared_ptr<Traverse> board = nullptr;
     while (!board) {
         std::cout << "\nA Board must be 3x3 or larger\n";
-        std::cout << "\nA Board connot be larger than 40x40\n";
+        std::cout << "\nA Board cannot be larger than 40x40\n";
         std::cout << "The string you input must have as many characters as a perfect square (row count = column count)\n";
         std::cout << "The character inputs are '.', 'o' or 'O' for empty positions\n";
         std::cout << "The character inputs are 'l' or 'L' for lava positions\n";
