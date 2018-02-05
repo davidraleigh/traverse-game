@@ -84,3 +84,70 @@ Level 4: Now repeat the Level 3 task for this 32x32 board.  Also, modify your va
 
 
 
+
+Demo output for starting at (0, 31) and finishing at (31, 0). Each turn in the sequence of the path is demonstrated by the corresponding number. In the below exampl you can see the use of the teleport at the 6th turn:
+
+```bash
+1. [I]nput board
+2. [P]re-made board
+3. [E]mpty board
+
+E[X]it
+
+Select a start position row:0
+
+Select a start position column:31
+
+Select an end position row:31
+
+Select an end position column:0
+
+
+Completed board:
+
+The character inputs are '.', 'o' or 'O' for empty positions. They cost 1 movement per position.
+The character inputs are 'l' or 'L' for lava positions. They cost 5 movements per position.
+The character inputs are 'b' or 'B' for barrier positions. Impassable.
+The character inputs are 'r' or 'R' for rock positions. Impassable
+The character inputs are 'w' or 'W' for water positions. They cost 3 movements per position.
+The character inputs are 't' or 'T' for teleport positions. Only two teleport positions per map.
+
+. . . . . . . . B . . . L L L . . . . . . . . . . . . . . . . 0    0
+. . . . . . . . B . . . L L L . . . . . . . . . . . . . . . . .    1
+. . . . . . . . B . . . L L L . . . L L L . . . . . . . . . 1 .    2
+. . . . . . . . B . . . L L L . . L L L . . . R R . . . 2 . . .    3
+. . . . . . . . B . . . L L L L L L L L . . . R R . . . . . . .    4
+. . . . . . . . B . . . L L L L L L . . . . . . . . . 3 . . . .    5
+. . . . . . . . B . . . . . . . . . . . . R R . . . . . . . . .    6
+. . . . . . . . B B . . . . . . . . . . . R R . . . 4 . . . . .    7
+. . . . . . . . W B B . . . . . . . . . . . . . . . . . . . . .    8
+. . . R R . . . W W B B B B B B B B B B . . . . . 5 . . . . . .    9
+. . . R R . . . W W . . . . . . . . . B . . . . . . . . . . . .    10
+. . . . . . . . W W . . . . . . . . . B . . . . . . 6 . . . . .    11
+. . . W W W W W W W . . . . . . . . . B . . . . . . . . . . . .    12
+. . . W W W W W W W . . . . . . . . . B . . R R . . . . . . . .    13
+. . . W W . . . . . . . . . . B B B B B . . R R . W W W W W W W    14
+. . . W W . . . . . . . . . . B . . . . . . . . . W . . . . . .    15
+W W W W . . . . . . . . . . . B . . . W W W W W W W . . . . . .    16
+. . . W W W W W W W . . . . . B . . . . . . . . . . . . B B B B    17
+. . . W W W W W W W . . . . . B B B . . . . . . . . . . B . . .    18
+. . . W W W W W W W . . . . . . . B W W W W W W B B B B B . . .    19
+. . . W W W W W W W . . . . . . . B W W W W W W B . . . . . . .    20
+. . . . . . . . . . . B B B . . . . . . . . . . B B . . . . . .    21
+. . . . . R R . . . . B . . . . . . . . . . . . . B . . . . . .    22
+. . . . . R R . . . . B . . . . . . . . . . . . . B . 6 . . . .    23
+. . . . . . . . . . . B . . . . . R R . . . . . . B . . . . . .    24
+. . . . . . . . . . . B . . . . . R R . . . . . . . 7 . . . . .    25
+. . . . . . . . . . . B . . . . . . . . . . R R . . . . . . . .    26
+. . . . . . . . . . . B . . . . . . . . . . R R . 8 . . . . . .    27
+. . . . . . . . . . . . . . . . . . . . . . . 9 . . . . . . . .    28
+. . . . . 18. . . . . . . . . . . . . . . 10. . . . . . . . . .    29
+. . 20. . . . 17. . . 15. . . 13. . . 11. . . . . . . . . . . .    30
+21. . . 19. . . . 16. . . 14. . . 12. . . . . . . . . . . . . .    31
+
+
+0 1 2 3 4 5 6 7 8 9 10111213141516171819202122232425262728293031
+
+```
+
+
