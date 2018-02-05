@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(traverse_test)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../traverse)
-
 include_directories(${CMAKE_SOURCE_DIR}/cxxtest
         ${CMAKE_SOURCE_DIR}/traverse/traverse)
 
@@ -24,8 +22,9 @@ execute_process(COMMAND
         -c ${CMAKE_SOURCE_DIR}/cxxtest/python
         -t ${CMAKE_SOURCE_DIR}/traverse/traverse-tests)
 
-set(SOURCE_FILES
-        traverse/traverse-tests/runner.cpp)
+set(SOURCE_FILES runner.cpp)
 
-add_executable(traverse_test  ${SOURCE_FILES})
+add_executable(traverse_test ${SOURCE_FILES})
 target_link_libraries(traverse_test traverse_lib)
+
+#add_test (NAME Traverse_Unit_Tests COMMAND traverse_test)

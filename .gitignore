@@ -55,3 +55,18 @@ xcuserdata
 
 .idea
 cmake-build-debug
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+traverse/traverse/CMakeFiles/
+traverse/traverse/Makefile
+traverse/traverse/cmake_install.cmake
+traverse_game
+CTestTestfile.cmake
+traverse/traverse-tests/CTestTestfile.cmake
+traverse/traverse-tests/traverse_test
+traverse/traverse-tests/traverse_test.cbp
+traverse/traverse/traverse_lib.cbp
+traverse_game.cbp
+traverse/traverse-tests/TestResults.xml

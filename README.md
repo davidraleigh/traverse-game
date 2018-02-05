@@ -1,13 +1,21 @@
 # traverse-game
 
-## Installation
+## Installation and Building
 To get the unit tests to run you must pull with recursive
 ```bash
 $ git clone --recursive https://github.com/davidraleigh/traverse-game.git
 ```
 
-## Building
 Requires cmake
+```bash
+cmake .
+make
+```
+
+To run the example just execute the program in your terminal:
+```bash
+./traverse_game
+```
 
 ## Details of programming challenge:
 

@@ -12,3 +12,6 @@ set(SOURCE_FILES
 
 add_executable(traverse_game ${SOURCE_FILES})
 target_link_libraries(traverse_game traverse_lib)
+#
+enable_testing()
+add_subdirectory(traverse/traverse-tests)
